@@ -82,6 +82,16 @@ namespace EnhancedHierarchy {
             applyPrefabStyle.focused.textColor = Color.white;
             applyPrefabStyle.active.textColor = Color.white;
 
+            newToggleStyle = new GUIStyle("ShurikenLabel") {
+                alignment = TextAnchor.MiddleRight,
+                clipping = TextClipping.Overflow,
+                fontSize = 8
+            };
+            newToggleStyle.normal.textColor = Color.white;
+            newToggleStyle.hover.textColor = Color.white;
+            newToggleStyle.focused.textColor = Color.white;
+            newToggleStyle.active.textColor = Color.white;
+
             prefabApplyContent = new GUIContent("A");
             staticContent = new GUIContent();
             lockContent = new GUIContent();
@@ -143,6 +153,7 @@ namespace EnhancedHierarchy {
         public static readonly Color selectedFocusedColor;
         public static readonly Color selectedUnfocusedColor;
 
+        public static readonly GUIStyle newToggleStyle;
         public static readonly GUIStyle staticToggleStyle;
         public static readonly GUIStyle applyPrefabStyle;
         public static readonly GUIStyle lockToggleStyle;

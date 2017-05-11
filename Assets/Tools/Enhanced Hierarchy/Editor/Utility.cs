@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using UnityEditor;
@@ -41,7 +42,7 @@ namespace EnhancedHierarchy {
         public static bool HierarchyFocused { get { return EditorWindow.focusedWindow && EditorWindow.focusedWindow.GetType() == hierarchyWindowType; } }
 
         public static void LogException(Exception e) {
-            Debug.LogErrorFormat("Unexpected exception in Enhanced Hierarchy: {0}", e);
+            Debug.LogError(string.Format("Unexpected exception in Enhanced Hierarchy: {0}", e));
 
             if(errorCount++ >= 3) {
                 Debug.LogWarning("Automatically disabling Enhanced Hierarchy, if the error persists contact the developer");
@@ -50,7 +51,7 @@ namespace EnhancedHierarchy {
             }
         }
 
-        [MenuItem(MENU_ITEM_PATH)]
+        [MenuItem(MENU_ITEM_PATH, false, int.MinValue)]
         private static void EnableDisableHierarchy() {
             Preferences.Enabled.Value = !Preferences.Enabled;
             InternalEditorUtility.RepaintAllViews();
@@ -58,7 +59,9 @@ namespace EnhancedHierarchy {
 
         [MenuItem(MENU_ITEM_PATH, true)]
         private static bool CheckHierarchyEnabled() {
+#if UNITY_5
             Menu.SetChecked(MENU_ITEM_PATH, Preferences.Enabled);
+#endif
             return true;
         }
 
@@ -109,12 +112,25 @@ namespace EnhancedHierarchy {
 
         public static Texture2D ConvertToTexture(byte[] bytes, string name) {
             try {
-                var texture = new Texture2D(0, 0, TextureFormat.ARGB32, false, false) {
+                var texture = new Texture2D(0, 0, TextureFormat.ARGB32, false, true) {
                     name = name,
                     hideFlags = HideFlags.HideAndDontSave
                 };
 
-                texture.LoadImage(bytes);
+                //Texture2D.LoadImage changed to an extension method in Unity 2017
+                //Compiling it with the old method will make the module stop working on 2017
+                //Compiling it with the extension method will make the module stop working with older versions
+                var imageConversionClass = typeof(Texture2D).Assembly.GetType("UnityEngine.ImageConversion", false);
+
+                if(imageConversionClass == null) {
+                    var loadMethod = typeof(Texture2D).GetMethod("LoadImage", new Type[] { typeof(byte[]) });
+                    loadMethod.Invoke(texture, new object[] { bytes });
+                }
+                else {
+                    var loadMethod = imageConversionClass.GetMethod("LoadImage", new Type[] { typeof(Texture2D), typeof(byte[]) });
+                    loadMethod.Invoke(null, new object[] { texture, bytes });
+                }
+
                 return texture;
             }
             catch(Exception e) {
@@ -181,6 +197,35 @@ namespace EnhancedHierarchy {
             return LastInHierarchy(go.transform);
         }
 
+        public static void LockObject(GameObject go) {
+            Undo.RegisterFullObjectHierarchyUndo(go, "Lock object");
+
+            go.hideFlags |= HideFlags.NotEditable;
+
+            if(!Preferences.AllowSelectingLockedSceneView)
+                foreach(var comp in go.GetComponents<Component>())
+                    if(!(comp is Transform)) {
+                        comp.hideFlags |= HideFlags.NotEditable;
+                        comp.hideFlags |= HideFlags.HideInHierarchy;
+                    }
+
+            EditorUtility.SetDirty(go);
+        }
+
+        public static void UnlockObject(GameObject go) {
+            Undo.RegisterFullObjectHierarchyUndo(go, "Unlock Object");
+
+            go.hideFlags &= ~HideFlags.NotEditable;
+
+			foreach(var comp in go.GetComponents<Component>())
+				if(!(comp is Transform)) {
+					comp.hideFlags &= ~HideFlags.NotEditable;
+					comp.hideFlags &= ~HideFlags.HideInHierarchy;
+				}
+
+            EditorUtility.SetDirty(go);
+        }
+
         public static GUIStyle CreateStyleFromTextures(Texture2D on, Texture2D off) {
             var style = new GUIStyle();
 
@@ -197,6 +242,63 @@ namespace EnhancedHierarchy {
             style.fixedWidth = 15f;
 
             return style;
+        }
+
+        public static ChildrenChangeMode AskChangeModeIfNecessary(List<GameObject> objs, ChildrenChangeMode reference, string title, string message) {
+            if(reference != ChildrenChangeMode.Ask)
+                return reference;
+
+            foreach(var obj in objs)
+                if(obj && obj.transform.childCount > 0)
+                    return (ChildrenChangeMode)EditorUtility.DisplayDialogComplex(title, message, "Yes, change children", "No, this object only", "Cancel");
+
+            return ChildrenChangeMode.ObjectOnly;
+        }
+
+        public static void ChangeLayerAndAskForChildren(List<GameObject> objs, int newLayer) {
+            foreach(var obj in objs)
+                Undo.RegisterFullObjectHierarchyUndo(obj, "Layer changed");
+
+            var changeMode = AskChangeModeIfNecessary(objs, Preferences.LayerAskMode, "Change Layer",
+                   "Do you want to change the layers of the children objects as well?");
+
+            switch(changeMode) {
+                case ChildrenChangeMode.ObjectOnly:
+                    foreach(var obj in objs)
+                        obj.layer = newLayer;
+                    break;
+
+                case ChildrenChangeMode.ObjectAndChildren:
+                    foreach(var obj in objs) {
+                        obj.layer = newLayer;
+                        foreach(var transform in obj.GetComponentsInChildren<Transform>(true))
+                            transform.gameObject.layer = newLayer;
+                    }
+                    break;
+            }
+        }
+
+        public static void ChangeTagAndAskForChildren(List<GameObject> objs, string newTag) {
+            foreach(var obj in objs)
+                Undo.RegisterFullObjectHierarchyUndo(obj, "Tag changed");
+
+            var changeMode = AskChangeModeIfNecessary(objs, Preferences.TagAskMode, "Change Layer",
+                   "Do you want to change the tags of the children objects as well?");
+
+            switch(changeMode) {
+                case ChildrenChangeMode.ObjectOnly:
+                    foreach(var obj in objs)
+                        obj.tag = newTag;
+                    break;
+
+                case ChildrenChangeMode.ObjectAndChildren:
+                    foreach(var obj in objs) {
+                        obj.tag = newTag;
+                        foreach(var transform in obj.GetComponentsInChildren<Transform>(true))
+                            transform.tag = newTag;
+                    }
+                    break;
+            }
         }
     }
 }

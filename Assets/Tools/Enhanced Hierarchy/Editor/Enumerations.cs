@@ -18,14 +18,14 @@ namespace EnhancedHierarchy {
     }
 
     internal enum DrawType {
-        Enabled = 0,
+        Enable = 0,
         Static = 1,
         Lock = 2,
         Icon = 3,
         ApplyPrefab = 4,
         Tag = 5,
         Layer = 6,
-        MaxValue = 7
+        None = 7
     }
 
     internal enum StripType {
@@ -35,7 +35,7 @@ namespace EnhancedHierarchy {
         ColorAndLines = Color | Lines
     }
 
-    internal enum StaticMode {
+    internal enum ChildrenChangeMode {
         ObjectAndChildren = 0,
         ObjectOnly = 1,
         Ask = 2,

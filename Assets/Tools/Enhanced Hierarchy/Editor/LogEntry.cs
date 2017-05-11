@@ -50,15 +50,20 @@ namespace EnhancedHierarchy {
             }
             catch(Exception e) {
                 if(Preferences.Warnings)
-                    Debug.LogWarningFormat("Enhanced Hierarchy, error getting console entries, if this warning persists, consider disabling \"Warnings\" in the preferences: {0}", e);
+                    Debug.LogWarning(string.Format("Enhanced Hierarchy, error getting console entries, if this warning persists, consider disabling \"Warnings\" in the preferences: {0}", e));
             }
-
+			
+			#if UNITY_5
             Application.logMessageReceivedThreaded += (logString, stackTrace, type) => needLogReload = true;
-
+			#else
+			needLogReload = true;
+			#endif
             EditorApplication.update += () => {
                 if(needLogReload && Preferences.Warnings && Preferences.Enabled) {
                     ReloadReferences();
+					#if UNITY_5
                     needLogReload = false;
+					#endif
                 }
             };
         }
@@ -94,6 +99,9 @@ namespace EnhancedHierarchy {
                     }
                 }
             }
+			catch(Exception e){
+			Debug.LogException(e);
+			}
             finally {
                 endMethod.Invoke(null, null);
             }

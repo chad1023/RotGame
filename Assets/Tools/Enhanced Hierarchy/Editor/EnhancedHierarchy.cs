@@ -1,5 +1,5 @@
 ﻿/* Enhanced Hierarchy for Unity
- * Version 2.1.0
+ * Version 2.1.4, last change 25/04/2017
  * Samuel Schultze
  * samuelschultze@gmail.com
 */
@@ -43,6 +43,7 @@ namespace EnhancedHierarchy {
             Utility.ForceUpdateHierarchyEveryFrame();
             EditorApplication.hierarchyWindowItemOnGUI += SetItemInformation;
             EditorApplication.hierarchyWindowItemOnGUI += OnItemGUI;
+            EditorApplication.RepaintHierarchyWindow();
         }
 
         private static void SetItemInformation(int id, Rect rect) {
@@ -117,46 +118,35 @@ namespace EnhancedHierarchy {
                     }
 
                     if(isGameObject) {
-                        Undo.RecordObject(currentGameObject, "Hierarchy Changed");
+                        //Undo.RecordObject(currentGameObject, "Hierarchy Changed");
+                        //Undo.RegisterFullObjectHierarchyUndo(currentGameObject, "Hierarchy Changed");
 
                         rect.xMin = rect.xMax - rect.height;
                         rect.x += rect.height - Preferences.Offset;
                         rect.y++;
 
+                        if(Preferences.ReplaceToggle && currentGameObject.transform.childCount > 0)
+                            ChildToggle();
+
                         for(var i = 0; i < Preferences.DrawOrder.Count; i++) {
                             rect.x -= rect.height;
                             GUI.backgroundColor = Styles.backgroundColorEnabled;
-                            switch(Preferences.DrawOrder[i]) {
-                                case DrawType.Enabled:
-                                    DrawActiveButton(rect);
-                                    break;
-
-                                case DrawType.Static:
-                                    DrawStaticButton(rect);
-                                    break;
-
-                                case DrawType.Lock:
-                                    DrawLockButton(rect);
-                                    break;
-
-                                case DrawType.Icon:
-                                    DrawIcon(rect);
-                                    break;
-
-                                case DrawType.ApplyPrefab:
-                                    DrawPrefabApply(rect);
-                                    break;
-
-                                case DrawType.Tag:
-                                    DrawTag(rect);
-                                    break;
-
-                                case DrawType.Layer:
-                                    DrawLayer(rect);
-                                    break;
-                            }
+                            DrawButtonOnRect(Preferences.DrawOrder[i], rect);
                         }
 
+                        var leftSideRect = rawRect;
+
+                        if(Preferences.LeftmostButton) {
+                            leftSideRect.xMin = 0f;
+                            leftSideRect.xMax = 18f;
+                        }
+                        else {
+                            leftSideRect.xMax = leftSideRect.xMin;
+                            leftSideRect.xMin -= currentGameObject.transform.childCount > 0 || Preferences.Tree ? 30f : 18f;
+                            leftSideRect.x += 2f;
+                        }
+
+                        DrawButtonOnRect(Preferences.LeftSideButton, leftSideRect);
                         DrawMiniLabel(ref rect);
                         GUI.backgroundColor = Color.white;
                     }
@@ -171,6 +161,38 @@ namespace EnhancedHierarchy {
                     if(isRepaintEvent)
                         lastRect = rawRect;
                 }
+        }
+
+        private static void DrawButtonOnRect(DrawType button, Rect rect) {
+            switch(button) {
+                case DrawType.Enable:
+                    DrawActiveButton(rect);
+                    break;
+
+                case DrawType.Static:
+                    DrawStaticButton(rect);
+                    break;
+
+                case DrawType.Lock:
+                    DrawLockButton(rect);
+                    break;
+
+                case DrawType.Icon:
+                    DrawIcon(rect);
+                    break;
+
+                case DrawType.ApplyPrefab:
+                    DrawPrefabApply(rect);
+                    break;
+
+                case DrawType.Tag:
+                    DrawTag(rect);
+                    break;
+
+                case DrawType.Layer:
+                    DrawLayer(rect);
+                    break;
+            }
         }
 
         private static void IgnoreLockedSelection() {
@@ -189,6 +211,29 @@ namespace EnhancedHierarchy {
             }
         }
 
+        private static void ChildToggle() {
+            switch(Event.current.type) {
+                case EventType.Repaint:
+                    var rect = rawRect;
+
+                    rect.xMax = rect.xMin;
+                    rect.xMin -= 18f;
+                    rect.yMin += 2f;
+                    rect.x -= 1f;
+
+                    EditorGUI.DrawRect(rect, Styles.normalColor * Utility.PlaymodeTint);
+                    if(Preferences.ColorSeparator && rect.y / 16f % 2 <= 1f)
+                        EditorGUI.DrawRect(rect, Styles.sortColor * Utility.PlaymodeTint);
+                    if(Selection.gameObjects.Contains(currentGameObject))
+                        EditorGUI.DrawRect(rect, Utility.HierarchyFocused ? Styles.selectedFocusedColor : Styles.selectedUnfocusedColor);
+
+                    GUI.contentColor = currentColor;
+                    Styles.newToggleStyle.Draw(rect, new GUIContent(currentGameObject.transform.childCount.ToString("00")), -1);
+                    GUI.contentColor = Color.white;
+                    break;
+            }
+        }
+
         private static void DrawStaticButton(Rect rect) {
             using(new ProfilerSample("Static toggle")) {
                 GUI.changed = false;
@@ -198,32 +243,26 @@ namespace EnhancedHierarchy {
                 if(!GUI.changed)
                     return;
 
-                var changeMode = Preferences.StaticAskMode.Value;
-
-                if(currentGameObject.transform.childCount == 0)
-                    changeMode = StaticMode.ObjectOnly;
-                else if(changeMode == StaticMode.Ask) {
-                    var result = EditorUtility.DisplayDialogComplex("Change Static Flags",
-                                                                    "Do you want to " + (currentGameObject.isStatic ? "enable" : "disable") + " the static flags for all child objects as well?",
-                                                                    "Yes, change children",
-                                                                    "No, this object only",
-                                                                    "Cancel");
-
-                    if(result == 2)
-                        return;
-
-                    changeMode = (StaticMode)result;
-                }
-
                 var isStatic = !currentGameObject.isStatic;
+                var selectedObjects = GetSelectedObjectsAndCurrent();
+                var changeMode = Utility.AskChangeModeIfNecessary(selectedObjects, Preferences.StaticAskMode.Value, "Change Static Flags",
+                    "Do you want to " + (!isStatic ? "enable" : "disable") + " the static flags for all child objects as well?");
+
+                foreach(var obj in selectedObjects)
+                    Undo.RegisterFullObjectHierarchyUndo(obj, "Static Flags Changed");
 
                 switch(changeMode) {
-                    case StaticMode.ObjectOnly:
-                        currentGameObject.isStatic = isStatic;
+                    case ChildrenChangeMode.ObjectOnly:
+                        foreach(var obj in selectedObjects)
+                            obj.isStatic = isStatic;
                         break;
-                    case StaticMode.ObjectAndChildren:
-                        foreach(var transform in currentGameObject.GetComponentsInChildren<Transform>())
-                            transform.gameObject.isStatic = isStatic;
+
+                    case ChildrenChangeMode.ObjectAndChildren:
+                        foreach(var obj in selectedObjects) {
+                            var transforms = obj.GetComponentsInChildren<Transform>(true);
+                            foreach(var transform in transforms)
+                                transform.gameObject.isStatic = isStatic;
+                        }
                         break;
                 }
             }
@@ -240,7 +279,29 @@ namespace EnhancedHierarchy {
                 if(!GUI.changed)
                     return;
 
-                currentGameObject.hideFlags += locked ? -8 : 8;
+                var selectedObjects = GetSelectedObjectsAndCurrent();
+                var changeMode = Utility.AskChangeModeIfNecessary(selectedObjects, Preferences.LockAskMode.Value, "Lock Object",
+                    "Do you want to " + (!locked ? "lock" : "unlock") + " the children objects as well?");
+
+                switch(changeMode) {
+                    case ChildrenChangeMode.ObjectOnly:
+                        foreach(var obj in selectedObjects)
+                            if(!locked)
+                                Utility.LockObject(obj);
+                            else
+                                Utility.UnlockObject(obj);
+                        break;
+
+                    case ChildrenChangeMode.ObjectAndChildren:
+                        foreach(var obj in selectedObjects)
+                            foreach(var transform in obj.GetComponentsInChildren<Transform>(true))
+                                if(!locked)
+                                    Utility.LockObject(transform.gameObject);
+                                else
+                                    Utility.UnlockObject(transform.gameObject);
+                        break;
+                }
+
                 InternalEditorUtility.RepaintAllViews();
             }
         }
@@ -251,8 +312,15 @@ namespace EnhancedHierarchy {
                 GUI.backgroundColor = currentGameObject.activeSelf ? Styles.backgroundColorEnabled : Styles.backgroundColorDisabled;
                 GUI.Toggle(rect, currentGameObject.activeSelf, Styles.activeContent, Styles.activeToggleStyle);
 
-                if(GUI.changed)
-                    currentGameObject.SetActive(!currentGameObject.activeSelf);
+                if(GUI.changed) {
+                    var objs = GetSelectedObjectsAndCurrent();
+                    var active = !currentGameObject.activeSelf;
+
+                    Undo.RecordObjects(objs.ToArray(), currentGameObject.activeSelf ? "Disabled GameObject" : "Enabled Gameobject");
+
+                    foreach(var obj in objs)
+                        obj.SetActive(active);
+                }
             }
         }
 
@@ -263,15 +331,20 @@ namespace EnhancedHierarchy {
                 if(!content.image)
                     return;
 
-                if(Preferences.Tooltips)
-                    content.tooltip = "Change Icon";
-
+                content.tooltip = Preferences.Tooltips ? "Change Icon" : string.Empty;
                 content.text = string.Empty;
+
                 rect.yMin++;
                 rect.xMin++;
 
-                if(GUI.Button(rect, content, EditorStyles.label))
-                    Utility.ShowIconSelector(currentGameObject, rect, true);
+                GUI.changed = false;
+                GUI.Button(rect, content, EditorStyles.label);
+
+                if(!GUI.changed)
+                    return;
+
+                Undo.RegisterFullObjectHierarchyUndo(currentGameObject, "Icon Changed");
+                Utility.ShowIconSelector(currentGameObject, rect, true);
             }
         }
 
@@ -306,7 +379,7 @@ namespace EnhancedHierarchy {
                 var layer = EditorGUI.LayerField(rect, currentGameObject.layer, Styles.layerStyle);
 
                 if(GUI.changed)
-                    currentGameObject.layer = layer;
+                    Utility.ChangeLayerAndAskForChildren(GetSelectedObjectsAndCurrent(), layer);
             }
         }
 
@@ -317,14 +390,15 @@ namespace EnhancedHierarchy {
                 EditorGUI.LabelField(rect, Styles.tagContent);
                 var tag = EditorGUI.TagField(rect, Styles.tagContent, currentGameObject.tag, Styles.tagStyle);
 
-                if(GUI.changed)
-                    currentGameObject.tag = tag;
+                if(GUI.changed && tag != currentGameObject.tag)
+                    Utility.ChangeTagAndAskForChildren(GetSelectedObjectsAndCurrent(), tag);
             }
         }
 
         private static void DrawHorizontalSeparator(Rect rect) {
             using(new ProfilerSample("Horizontal separator")) {
                 rect.xMin = 0f;
+                rect.xMax = rect.xMax + 50f;
                 rect.yMax = rect.yMin + 1f;
 
                 var count = Mathf.Max(100, (lastRect.y - rect.y) / lastRect.height);
@@ -339,6 +413,7 @@ namespace EnhancedHierarchy {
         private static void ColorSort(Rect rect) {
             using(new ProfilerSample("Colored sort")) {
                 rect.xMin = 0f;
+                rect.xMax = rect.xMax + 50f;
 
                 var count = Mathf.Max(100, (lastRect.y - rect.y) / lastRect.height);
 
@@ -385,10 +460,6 @@ namespace EnhancedHierarchy {
                 goWarnings = string.Empty;
                 goErrors = string.Empty;
 
-                if(!LogEntry.ReferencedObjects.TryGetValue(currentGameObject, out contextEntries))
-                    return;
-
-                var count = contextEntries.Count;
                 var components = currentGameObject.GetComponents<MonoBehaviour>();
 
                 for(var i = 0; i < components.Length; i++)
@@ -397,13 +468,17 @@ namespace EnhancedHierarchy {
                         break;
                     }
 
-                for(var i = 0; i < count; i++)
-                    if(goLogs.Length < 150 && contextEntries[i].HasMode(EntryMode.ScriptingLog))
-                        goLogs += contextEntries[i] + "\n";
-                    else if(goWarnings.Length < 150 && contextEntries[i].HasMode(EntryMode.ScriptingWarning))
-                        goWarnings += contextEntries[i] + "\n";
-                    else if(goErrors.Length < 150 && contextEntries[i].HasMode(EntryMode.ScriptingError))
-                        goErrors += contextEntries[i] + "\n";
+                if(LogEntry.ReferencedObjects.TryGetValue(currentGameObject, out contextEntries)) {
+                    var count = contextEntries.Count;
+
+                    for(var i = 0; i < count; i++)
+                        if(goLogs.Length < 150 && contextEntries[i].HasMode(EntryMode.ScriptingLog))
+                            goLogs += contextEntries[i] + "\n";
+                        else if(goWarnings.Length < 150 && contextEntries[i].HasMode(EntryMode.ScriptingWarning))
+                            goWarnings += contextEntries[i] + "\n";
+                        else if(goErrors.Length < 150 && contextEntries[i].HasMode(EntryMode.ScriptingError))
+                            goErrors += contextEntries[i] + "\n";
+                }
 
                 if(goLogs.Length > 0)
                     warningsIconCount++;
@@ -453,7 +528,7 @@ namespace EnhancedHierarchy {
 
                 rect.yMin += 2f;
                 rect.xMin = rect.xMax - 18f;
-                rect.xMax = 1000f;
+                rect.xMax = rawRect.xMax;
 
                 EditorGUI.DrawRect(rect, Styles.normalColor * Utility.PlaymodeTint);
                 if(Preferences.ColorSeparator && rect.y / 16f % 2 <= 1f)
@@ -469,20 +544,22 @@ namespace EnhancedHierarchy {
             }
         }
 
-        private static void TagField(ref Rect rect) {
+        private static void TagMiniLabel(ref Rect rect) {
+            Styles.miniLabelStyle.fontSize = Preferences.SmallerMiniLabel ? 8 : 9;
             rect.xMin -= Styles.miniLabelStyle.CalcSize(new GUIContent(currentGameObject.tag)).x;
             var tag = EditorGUI.TagField(rect, currentGameObject.tag, Styles.miniLabelStyle);
 
             if(GUI.changed)
-                currentGameObject.tag = tag;
+                Utility.ChangeTagAndAskForChildren(GetSelectedObjectsAndCurrent(), tag);
         }
 
-        private static void LayerField(ref Rect rect) {
+        private static void LayerMiniLabel(ref Rect rect) {
+            Styles.miniLabelStyle.fontSize = Preferences.SmallerMiniLabel ? 8 : 9;
             rect.xMin -= Styles.miniLabelStyle.CalcSize(new GUIContent(LayerMask.LayerToName(currentGameObject.layer))).x;
             var layer = EditorGUI.LayerField(rect, currentGameObject.layer, Styles.miniLabelStyle);
 
             if(GUI.changed)
-                currentGameObject.layer = layer;
+                Utility.ChangeLayerAndAskForChildren(GetSelectedObjectsAndCurrent(), layer);
         }
 
         private static void DrawMiniLabel(ref Rect rect) {
@@ -496,26 +573,26 @@ namespace EnhancedHierarchy {
                 switch(Preferences.LabelType.Value) {
                     case MiniLabelType.Tag:
                         if(hasTag)
-                            TagField(ref rect);
+                            TagMiniLabel(ref rect);
                         break;
 
                     case MiniLabelType.Layer:
                         if(hasLayer)
-                            LayerField(ref rect);
+                            LayerMiniLabel(ref rect);
                         break;
 
                     case MiniLabelType.LayerOrTag:
                         if(hasLayer)
-                            LayerField(ref rect);
+                            LayerMiniLabel(ref rect);
                         else if(hasTag)
-                            TagField(ref rect);
+                            TagMiniLabel(ref rect);
                         break;
 
                     case MiniLabelType.TagOrLayer:
                         if(hasTag)
-                            TagField(ref rect);
+                            TagMiniLabel(ref rect);
                         else if(hasLayer)
-                            LayerField(ref rect);
+                            LayerMiniLabel(ref rect);
                         break;
                 }
 
@@ -607,6 +684,23 @@ namespace EnhancedHierarchy {
                     else if(!dragSelection.Contains(currentGameObject) && selectionRect.Overlaps(rect))
                         dragSelection.Add(currentGameObject);
             }
+        }
+
+        private static List<GameObject> GetSelectedObjectsAndCurrent() {
+            if(!Preferences.ChangeAllSelected || Selection.gameObjects.Length <= 1)
+                return new List<GameObject> { currentGameObject };
+
+            var selection = new List<GameObject>(Selection.gameObjects);
+
+            for(var i = 0; i < selection.Count; i++)
+                if(EditorUtility.IsPersistent(selection[i]))
+                    selection.RemoveAt(i);
+
+            if(!selection.Contains(currentGameObject))
+                selection.Add(currentGameObject);
+
+            selection.Remove(null);
+            return selection;
         }
     }
 }
