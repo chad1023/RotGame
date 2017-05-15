@@ -12,9 +12,12 @@ public class ObjectPool : MonoBehaviour {
 	public Queue<ParticleSystem>[] particle_pool;
 	public Vector3 pool_location;
 
+    List<GameObject> _Enslist;
 
-	void Awake(){
-		ens_pool = new Queue<GameObject>[ens.Length];
+
+    void Awake(){
+        _Enslist = new List<GameObject>();
+        ens_pool = new Queue<GameObject>[ens.Length];
 		particle_pool = new Queue<ParticleSystem>[ens.Length];
 		for(int i=0; i<ens.Length;i++) {
 			ens_pool [i] = new Queue<GameObject> ();
@@ -24,7 +27,9 @@ public class ObjectPool : MonoBehaviour {
 				GameObject ens_preb = Instantiate (ens[i],pool_location,ens[i].transform.rotation) as GameObject;
 				ens_pool[i].Enqueue (ens_preb);
 				ens_preb.SetActive (false);
-			}
+                _Enslist.Add(ens_preb);
+
+            }
 
 			for (int j = 0; j < ini_particle; j++) {
 				ParticleSystem particle_preb = Instantiate (particle[i],pool_location,particle[i].transform.rotation) as ParticleSystem;
@@ -64,8 +69,8 @@ public class ObjectPool : MonoBehaviour {
 	//function for disalbe ens and put into pool for recovery
 	public void Recovery(GameObject recovery){
 		int i = 0;
-		Debug.Log ("ens:"+ens.Length);
-		Debug.Log ("enspool:"+ens_pool.Length);
+		//Debug.Log ("ens:"+ens.Length);
+		//Debug.Log ("enspool:"+ens_pool.Length);
 
 		for (i=0;i<ens.Length;i++)
 		{
@@ -74,7 +79,7 @@ public class ObjectPool : MonoBehaviour {
 				break;
 			}
 		}
-
+        /*
 		//die particle from pool
 		if(particle_pool[i].Count>0)
 		{
@@ -83,7 +88,7 @@ public class ObjectPool : MonoBehaviour {
 			p_recover.transform.rotation = recovery.transform.rotation;
 			p_recover.Play ();
 		}
-
+        */
 		ens_pool[i].Enqueue (recovery);
 		recovery.SetActive (false);
 	
@@ -135,5 +140,27 @@ public class ObjectPool : MonoBehaviour {
 			particle_pool [i].Clear ();
 		}
 	}
+
+    private void Update()
+    {
+        
+    }
+    /// <summary>
+    //停止敵人移動
+    /// </summary>
+    public void StopAllEns()
+    {
+        for (int i = 0; i < _Enslist.Count; i++)
+        {
+            _Enslist[i].GetComponent<EnsContrrol>().isStop = true;
+        }
+    }
+    public void RunAllEns()
+    {
+        for (int i = 0; i < _Enslist.Count; i++)
+        {
+            _Enslist[i].GetComponent<EnsContrrol>().isStop = false;
+        }
+    }
 
 }

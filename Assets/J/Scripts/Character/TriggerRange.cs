@@ -19,7 +19,8 @@ public class TriggerRange : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D other)
     {
 		EnsContrrol tempEnemyBase = other.GetComponent<EnsContrrol>();
-		if (tempEnemyBase != null && !tempEnemyBase.isDie /*&& tempEnemyBase._CharacterBase!=m_CharacterBase*/)
+		if (tempEnemyBase != null && !tempEnemyBase.isDie /*&& tempEnemyBase._CharacterBase!=m_CharacterBase*/ 
+            && m_CharacterBase.m_Color==tempEnemyBase.ColorType)
 		{	
 			tempEnemyBase.AddChar (m_CharacterBase);
 			tempEnemyBase._CharacterBase = m_CharacterBase;

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
+
+
 public class GameMain : MonoBehaviour {
 	[Header("這邊放東西用的")]
 	public GameObject[] EnsPrefabs;
@@ -13,19 +16,29 @@ public class GameMain : MonoBehaviour {
 	public Image Boss_img;
 	public Text char_text;
 	public Image char_img;
-	public Text finish;
+	public Text finish_text;
+
+    [Header("DOShake parameter")]
+    public GameObject boss;
+    public float BossShakeDuration;
+    public float BossShakeStrenth;
+    [Space]
+    public CameraScript _CameraScript;
 
 	int r_Ens,r_Pos;
-	float r_Time;
+	float r_Time = 1;//下次產生的時間，預設第一波5秒開始
 	float r_Force;
-	bool canIns=true;
+    bool canIns = true;
+    bool isEnd = false;
 
 	float init_boss_blood;
 	float init_char_blood;
-	// Use this for initialization
-	void Start () {
-		r_Time = 5;
-		objectpool = GetComponent<ObjectPool> ();
+
+    
+    // Use this for initialization
+    void Start () {
+       
+        objectpool = GetComponent<ObjectPool> ();
 
 		init_boss_blood = boss_blood;
 		init_char_blood = char_blood;
@@ -47,20 +60,26 @@ public class GameMain : MonoBehaviour {
 			char_text.text = char_blood.ToString ();
 			char_img.fillAmount=(float)(char_blood / init_char_blood);
 		}
-		if (boss_blood == 0) {
-			finish.text = "Boss dead";
+		if (boss_blood == 0 && !isEnd) {
+            GameEnd("Boss dead");
 		}
-		else if (char_blood==0)
-			finish.text="You dead";
-		
-
-	}
+		else if (char_blood==0 && !isEnd)
+        {
+            GameEnd("You dead");
+            
+        }
+        //測試用
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            boss.transform.DOShakePosition(BossShakeDuration, BossShakeStrenth);
+        }
+    }
 
 	IEnumerator Ins(float t)
 	{
 		canIns = false;
 		r_Ens = (int)Random.Range (0, 2);
-		r_Pos = (int)Random.Range (1, InsPositions.Length);
+		r_Pos = (int)Random.Range (3, InsPositions.Length);
 		r_Force = Random.Range (20, 40);
 		//GameObject temp= (GameObject)Instantiate (EnsPrefabs [r_Ens], InsPositions [r_Pos].position, Quaternion.identity);
 		yield return new WaitForSeconds (t);
@@ -73,14 +92,17 @@ public class GameMain : MonoBehaviour {
 
 	}
 	public void AttackBoss(int i){
-		boss_blood -= i;
+        boss.transform.DOShakePosition(BossShakeDuration, BossShakeStrenth);
+        boss_blood -= i;
 		if (boss_blood < 0)
 			boss_blood = 0;
 		
 	}
 	public void AttackChar(){
 		char_blood--;
-		if (char_blood < 0)
+        _CameraScript.Shake();
+
+        if (char_blood < 0)
 			char_blood = 0;
 	}
 	public void Reset()
@@ -90,7 +112,22 @@ public class GameMain : MonoBehaviour {
 		char_blood = init_char_blood;
 		objectpool.Reset ();
 		r_Time = Random.Range (0, 1);
-	}
+        canIns = true;
+        objectpool.RunAllEns();
+        isEnd = false;
+        finish_text.gameObject.SetActive(false);
 
+    }
+    void GameEnd(string s)
+    {
+        StopAllCoroutines();
+        canIns = false;
+        objectpool.StopAllEns();
+        isEnd = true;
+        finish_text.gameObject.SetActive(true);
+        finish_text.text = s;
 
+    }
+
+   
 }
