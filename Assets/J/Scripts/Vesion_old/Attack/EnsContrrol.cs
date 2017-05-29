@@ -51,7 +51,7 @@ public class EnsContrrol : MonoBehaviour {
         bloodtext.text = blood.ToString ();
 		if (blood == 0 && !isDie) {
 			DoDie ();
-			gamemain.AttackBoss (10);
+
 		}
 
 	}
@@ -62,7 +62,7 @@ public class EnsContrrol : MonoBehaviour {
 		if (other.collider.tag == "Player") {
 			DoDie ();
 			//Debug.Log (other.gameObject.name);
-			gamemain.AttackChar ();
+
 		}
 	}
 	void DoDie() {
@@ -71,7 +71,7 @@ public class EnsContrrol : MonoBehaviour {
 			item.RemoveEnemy (this);
 		}
 		//Debug.Log ("die");
-		GameMain.objectpool.Recovery (gameObject);
+
 		Reset ();
 
 
