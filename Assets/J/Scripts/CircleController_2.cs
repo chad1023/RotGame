@@ -14,12 +14,18 @@ public class Jtouch
 }
 public class CircleController_2 : MonoBehaviour
 {
-    //紀錄手指觸碰位置
-    private Vector2 m_screenPos = new Vector2();
-
+    [Header("圓環設定")]
     public GameObject Circle;
+    public GameObject[] InnerCircle;
+    
+    [Space]
+    [Header("操控設定")]
     public float RotateSpeed;
 
+    //Private patameter 
+
+    //紀錄手指觸碰位置
+    private Vector2 m_screenPos = new Vector2();
     bool isTouch = false;
     Jtouch m_Jtouch;
     void Update()
@@ -40,6 +46,13 @@ public class CircleController_2 : MonoBehaviour
 
     }
 
+/// <summary>
+/// This function is called every fixed framerate frame, if the MonoBehaviour is enabled.
+/// </summary>
+void FixedUpdate()
+{
+    
+}
     void MouseInput()
     {
         if (Input.GetMouseButtonDown(0))
@@ -100,70 +113,7 @@ public class CircleController_2 : MonoBehaviour
             }
             //攝影機縮放，如果1個手指以上觸碰螢幕
         }
-        /*
-        else if (Input.touchCount > 1)
-        {
-
-            //記錄兩個手指位置
-            Vector2 finger1 = new Vector2();
-            Vector2 finger2 = new Vector2();
-
-            //記錄兩個手指移動距離
-            Vector2 move1 = new Vector2();
-            Vector2 move2 = new Vector2();
-
-            //是否是小於2點觸碰
-            for (int i = 0; i < 2; i++)
-            {
-                UnityEngine.Touch touch = UnityEngine.Input.touches[i];
-
-                if (touch.phase == TouchPhase.Ended)
-                    break;
-
-                if (touch.phase == TouchPhase.Moved)
-                {
-                    //每次都重置
-                    float move = 0;
-
-                    //觸碰一點
-                    if (i == 0)
-                    {
-                        finger1 = touch.position;
-                        move1 = touch.deltaPosition;
-                        //另一點
-                    }
-                    else
-                    {
-                        finger2 = touch.position;
-                        move2 = touch.deltaPosition;
-
-                        //取最大X
-                        if (finger1.x > finger2.x)
-                        {
-                            move = move1.x;
-                        }
-                        else
-                        {
-                            move = move2.x;
-                        }
-
-                        //取最大Y，並與取出的X累加
-                        if (finger1.y > finger2.y)
-                        {
-                            move += move1.y;
-                        }
-                        else
-                        {
-                            move += move2.y;
-                        }
-
-                        //當兩指距離越遠，Z位置加的越多，相反之
-                        Camera.main.transform.Translate(0, 0, move * Time.deltaTime);
-                    }
-                }
-            }//end for
-        }//end else if 
-        */
+        
     }//end void
 
     /*gDefine.Direction*/
