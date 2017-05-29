@@ -21,9 +21,13 @@ public class CircleController_2 : MonoBehaviour
     [Space]
     [Header("操控設定")]
     public float RotateSpeed;
+    public float RotateLastTime;
+    public bool RotateLimit = true;
+
+
 
     //Private patameter 
-
+    private float touchlasttime;
     //紀錄手指觸碰位置
     private Vector2 m_screenPos = new Vector2();
     bool isTouch = false;
@@ -38,10 +42,17 @@ public class CircleController_2 : MonoBehaviour
 #endif
         if (isTouch)
         {
-            if (m_Jtouch.x_Distance != 0)
-                Circle.transform.Rotate(0, 0, m_Jtouch.x_Distance * RotateSpeed * Time.deltaTime);
-            if (m_Jtouch.y_Distance != 0)
-                Circle.transform.Rotate(0, 0, -m_Jtouch.y_Distance * RotateSpeed * Time.deltaTime);
+            if(RotateLimit)
+                touchlasttime += Time.deltaTime;
+            if (touchlasttime <= RotateLastTime)
+            {
+                if (m_Jtouch.x_Distance != 0)
+                    Circle.transform.Rotate(0, 0, m_Jtouch.x_Distance * RotateSpeed * Time.deltaTime);
+                if (m_Jtouch.y_Distance != 0)
+                    Circle.transform.Rotate(0, 0, -m_Jtouch.y_Distance * RotateSpeed * Time.deltaTime);
+            }
+            else
+                isTouch = false;
         }
 
     }
@@ -76,7 +87,8 @@ public class CircleController_2 : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             m_Jtouch = new Jtouch();
-            isTouch = false; 
+            isTouch = false;
+            touchlasttime = 0;
         //    Vector2 pos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         //    gDefine.Direction mDirection = HandDirection(m_screenPos, pos);
         //    Debug.Log("mDirection: " + mDirection.ToString());

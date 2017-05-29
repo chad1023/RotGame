@@ -17,6 +17,7 @@ public class GameEnum {
 		White,
         Blue,
         Red,
-        Green
+        Green,
+        other
 	}
 }
