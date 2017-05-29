@@ -34,7 +34,10 @@ public class LightBallControl : MonoBehaviour {
     }
     void GetHit(bool b)
     {
-        
+        if (b)
+        {
+            lasttime = 0;
+        }
     }
     public void Init()
     {
