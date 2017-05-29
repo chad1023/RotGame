@@ -17,7 +17,7 @@ public class CircleController_2 : MonoBehaviour
     [Header("圓環設定")]
     public GameObject Circle;
     public GameObject[] InnerCircle;
-    
+    public float CircleSelfRotateSpeed;
     [Space]
     [Header("操控設定")]
     public float RotateSpeed;
@@ -49,10 +49,22 @@ public class CircleController_2 : MonoBehaviour
 /// <summary>
 /// This function is called every fixed framerate frame, if the MonoBehaviour is enabled.
 /// </summary>
-void FixedUpdate()
-{
-    
-}
+    void FixedUpdate()
+    {
+        if(!isTouch){
+            for (int i = 0; i < InnerCircle.Length; i++)
+            {
+                if(i % 2== 0)
+                {
+                    InnerCircle[i].transform.Rotate(0,0,CircleSelfRotateSpeed*Time.deltaTime);
+                }
+                else
+                    InnerCircle[i].transform.Rotate(0,0,-CircleSelfRotateSpeed*Time.deltaTime);
+
+            }
+
+        }
+    }
     void MouseInput()
     {
         if (Input.GetMouseButtonDown(0))
