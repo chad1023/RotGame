@@ -49,6 +49,7 @@ public class GameMain : MonoBehaviour {
 	void Awake(){
 		clickmanagement = GetComponent<Clickmanagement> ();
 		encouter_list.Sort ((x, y) => { return x.e_time.CompareTo(y.e_time); });
+
 	}
 
     
@@ -124,6 +125,8 @@ public class GameMain : MonoBehaviour {
 			if (!energypad[j].interactable) {
 				energypad[j].interactable = true;
 				energypad[j].onClick.AddListener (() => SetClickItem(energyball[i].name,j));
+				GameObject enegryball = energypad [j].GetComponent<EnergyPad> ().enegyball[i];
+				enegryball.SetActive (true);
 				energyball_num++;
 				break;
 			}
@@ -137,6 +140,10 @@ public class GameMain : MonoBehaviour {
 		shoot = null;
 		energypad [shootbutton].onClick.RemoveAllListeners ();
 		energypad [shootbutton].interactable = false;
+		foreach (GameObject item in energypad[shootbutton].GetComponent<EnergyPad> ().enegyball) {
+			item.SetActive (false);
+		}
+
 		if (energyball_num == energyball_max)
 			energy = 0;
 		energyball_num--;
