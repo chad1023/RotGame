@@ -37,6 +37,7 @@ public class TestClick : MonoBehaviour {
             tempC.transform.localScale = new Vector3(1, 1, 1) *
                 (0.4f + Vector3.Distance(transform.position, rayhit.point) / 2.5f * 0.6f);
             text_num.text = "" + Num;
+            print(rayhit.point);
         }
 	}
 	public void Click1(){

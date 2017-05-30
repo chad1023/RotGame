@@ -149,12 +149,56 @@ public class JObjectPool : MonoBehaviour {
 			return null;
 		}
     }
+    /// <summary>
+    /// Get gameobject in JObject pool
+    /// </summary>
+    /// <param name="s"></param>
+    public GameObject GetGameObject(string s, Vector3 pos)
+    {
+        //尋找物件池裡有沒有這個名字的物件
+        if (m_Dictionary.ContainsKey(s))
+        {
+            for (int i = 0; i < m_Dictionary[s].Count; i++)
+            {
+                if (!m_Dictionary[s][i].activeSelf)
+                {
+                    m_Dictionary[s][i].transform.position = pos;
+                    m_Dictionary[s][i].SetActive(true);
+                    return m_Dictionary[s][i];
+                }
+            }
+            //如果都被使用的話，新創10個物件進入物件池。最後回傳最後一個物件
+            ShowDebug("Ur JObject pool is all uesd , now instantiate new 10 objects");
+            for (int i = 0; i < 9; i++)
+            {
+                GameObject temp = (GameObject)Instantiate(m_Dictionary[s][0], m_DictionaryForParent[s].transform);
+                temp.SetActive(false);
+                if (HideClone)
+                    temp.name = m_Dictionary[s][0].name;
+                m_Dictionary[s].Add(temp);
+            }
+            GameObject temp1 = (GameObject)Instantiate(m_Dictionary[s][0], m_DictionaryForParent[s].transform);
+            temp1.transform.position = pos;
+            temp1.SetActive(true);
+            if (HideClone)
+                temp1.name = m_Dictionary[s][0].name;
+            m_Dictionary[s].Add(temp1);
+            return temp1;
+        }
+        //如果沒有這個物件在物件池，就回傳null
+        else
+        {
+            ShowError(s + " doesn't exist in JObject pool");
+            return null;
+        }
+    }
 
-	/// <summary>
-	/// Recovery Gameobject
-	/// </summary>
-	/// <param name="s"></param>
-	public void Recovery(GameObject g)
+
+    /// <summary>
+    /// Recovery Gameobject
+    /// </summary>
+    /// <param name="s"></param>
+    public void Recovery(GameObject g)
 	{
 		g.SetActive (false);
 	}
@@ -169,7 +213,7 @@ public class JObjectPool : MonoBehaviour {
     }
 
     /// <summary>
-	/// Instantiate Objects into JObject pool , the parameter is the PrefabName setting in PrefabSetting
+	/// Instantiate Objects into JObject pool , the parameter is the prefab's name 
 	/// </summary>
 	/// <param name="s"></param>
     public void InstantiateObject(string s)
