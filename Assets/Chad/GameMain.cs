@@ -7,15 +7,17 @@ using DG.Tweening;
 
 public class GameMain : MonoBehaviour {
 	[Header("這邊放東西用的")]
-	private JObjectPool ObjectPool;
+	private Clickmanagement clickmanagement;
 
 	[Header("UI")]
 	public Slider durationbar;
 	public Slider energybar;
 
-	public Text distancetext;
+	public Text speedtext;
 	public Text totaldistancetext;
 	public Text gametext;
+	public Button[] energypad = new Button [5];
+	 
 
 
 	public int totaldistance;
@@ -24,8 +26,12 @@ public class GameMain : MonoBehaviour {
 	public float energy;
 	public bool IsInvincible = false;
 
+	public string shoot;
+	public int shootbutton;
+
 	public int energyball_num;
 	public int energyball_max;
+	public int enemy_radius;
 
 
 	[SerializeField]
@@ -33,6 +39,7 @@ public class GameMain : MonoBehaviour {
 
 	public List<Item_Encountered>encouter_list;
 	public List<GameObject> enemy_list;
+	public List<GameObject> energyball;
 
 
 
@@ -40,8 +47,7 @@ public class GameMain : MonoBehaviour {
 
 
 	void Awake(){
-		ObjectPool = JObjectPool._InstanceJObjectPool;
-
+		clickmanagement = GetComponent<Clickmanagement> ();
 		encouter_list.Sort ((x, y) => { return x.e_time.CompareTo(y.e_time); });
 	}
 
@@ -70,7 +76,7 @@ public class GameMain : MonoBehaviour {
 	void UpdateUI(){
 		durationbar.value = (float)duration/totaldistance;
 		energybar.value = energy;
-		distancetext.text = duration.ToString()+"(AU)";
+		speedtext.text = speed.ToString()+"(AU)";
 	}
 
 	void UpdateGame(){
@@ -106,12 +112,23 @@ public class GameMain : MonoBehaviour {
 	void EnergyCharged(){
 		Random.seed = System.Guid.NewGuid().GetHashCode();
 		int i=Random.Range (0, 5);
-		energyball_num++;
+
+		for(int j=0;j<energypad.Length;j++) {
+			if (!energypad[j].interactable) {
+				energypad[j].interactable = true;
+				energypad[j].onClick.AddListener (() => SetClickItem(energyball[i].name,j));
+				energyball_num++;
+				break;
+			}
+		}
 	//	ObjectPool.GetGameObject ();
 		print(i);
 	}
 
-	void EnergyShoot(){
+	void EnergyShoot(int i){
+		
+		energypad [i].onClick.RemoveAllListeners ();
+		energypad [i].interactable = false;
 		energyball_num--;
 	}
 
@@ -127,8 +144,23 @@ public class GameMain : MonoBehaviour {
 		if (!IsInvincible) {
 			Random.seed = System.Guid.NewGuid ().GetHashCode ();
 			int i = Random.Range (0, enemy_list.Count);
+			Vector2 project = Random.insideUnitCircle*enemy_radius;
+			Vector3 pos = new Vector3 (project.x, project.y, 0);
+			GameObject enemy = GetGameObject (enemy_list [i], pos);
+			Rigidbody r = enemy.GetComponent<Rigidbody> ();
+			r.velocity = (-enemy.transform.position).normalized;
 			print ("enemy" + i + "create");
 		}
+	}
+	void SetClickItem(string s,int button_i){
+		shoot = s;
+		shootbutton = button_i;
+
+	}
+
+	GameObject GetGameObject(GameObject prefab,Vector3 pos){
+	
+		return JObjectPool._InstanceJObjectPool.GetGameObject (prefab.name,pos);
 	}
 
 
