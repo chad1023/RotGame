@@ -161,7 +161,8 @@ public class GameMain : MonoBehaviour {
 		if (!IsInvincible) {
 			Random.seed = System.Guid.NewGuid ().GetHashCode ();
 			int i = Random.Range (0, enemy_list.Count);
-			Vector2 project = Random.insideUnitCircle*enemy_radius;
+
+			Vector2 project = (Random.insideUnitCircle).normalized*enemy_radius;
 			Vector3 pos = new Vector3 (project.x, project.y, 0);
 			GameObject enemy = GetGameObject (enemy_list [i], pos);
 			enemy.GetComponent<FlyingObjControl> ().MoveSpeed = 5;
