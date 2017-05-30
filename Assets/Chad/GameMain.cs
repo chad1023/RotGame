@@ -157,9 +157,7 @@ public class GameMain : MonoBehaviour {
 			Vector2 project = Random.insideUnitCircle*enemy_radius;
 			Vector3 pos = new Vector3 (project.x, project.y, 0);
 			GameObject enemy = GetGameObject (enemy_list [i], pos);
-			Rigidbody r = enemy.GetComponent<Rigidbody> ();
-			r.velocity = (-enemy.transform.position).normalized;
-			print ("enemy" + i + "create");
+			enemy.GetComponent<FlyingObjControl> ().MoveSpeed = 5;
 		}
 	}
 	void SetClickItem(string s,int button_i){
