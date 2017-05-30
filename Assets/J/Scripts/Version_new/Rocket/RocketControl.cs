@@ -2,22 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpotIns : MonoBehaviour {
-	/// <summary>
-	/// 
-	/// </summary>
-	public float SpotSpeed;
-
-	private float randonScale;
-	private float randonTime;
-
+public class RocketControl : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+	
+	
 }
