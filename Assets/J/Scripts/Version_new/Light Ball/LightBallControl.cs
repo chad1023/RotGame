@@ -49,6 +49,7 @@ public class LightBallControl : MonoBehaviour {
         if (b)
         {
             lasttime = 0;
+            transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
         }
         else{
             _CircleParmeter.LimitNumber++;
