@@ -18,6 +18,8 @@ public class GameEnum {
         Blue,
         Red,
         Green,
+		Yellow,
+		Purple,
         other
 	}
 }

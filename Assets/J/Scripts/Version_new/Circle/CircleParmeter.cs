@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CircleParmeter : MonoBehaviour {
-    public Clickmanagement clickmanagement;
+    public GameMain gamemain;
     public int LimitNumber;
     public float Radius;
 
@@ -18,7 +18,7 @@ public class CircleParmeter : MonoBehaviour {
 	}
     void OnMouseDown()
     {
-        if(LimitNumber>0 && clickmanagement.PrefabName!=null){
+		if(LimitNumber>0 && gamemain.shoot!=null){
             // get the ray point
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D rayhit = Physics2D.Raycast(ray.origin, ray.direction, 10);
@@ -28,12 +28,13 @@ public class CircleParmeter : MonoBehaviour {
             // modify its magnitude to Radius
             //modifyvecter *= Radius;
 
-            GameObject InsLight= JObjectPool._InstanceJObjectPool.GetGameObject(clickmanagement.PrefabName, modifyvecter);
+			GameObject InsLight= JObjectPool._InstanceJObjectPool.GetGameObject(gamemain.shoot, modifyvecter);
             InsLight.transform.localScale=new Vector3(0.8f,0.8f,0.8f);
             InsLight.transform.SetParent(this.transform);
             
-            clickmanagement.PrefabName = null;
-            LimitNumber--;
+			gamemain.EnergyShoot ();
+            
+			LimitNumber--;
         }
     }
 

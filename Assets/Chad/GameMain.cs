@@ -11,7 +11,7 @@ public class GameMain : MonoBehaviour {
 
 	[Header("UI")]
 	public Slider durationbar;
-	public Slider energybar;
+	public Image energybar;
 
 	public Text speedtext;
 	public Text totaldistancetext;
@@ -65,7 +65,9 @@ public class GameMain : MonoBehaviour {
 	void Update () {
 
 		duration= Mathf.Clamp (duration+(int)(speed * Time.deltaTime), 0, totaldistance);
-		energy += Time.deltaTime;
+		if(energyball_num<energyball_max)
+			energy =Mathf.Clamp(energy+0.5f*Time.deltaTime,0.0f,1.0f);
+
 
 		UpdateUI ();
 		UpdateGame ();
@@ -75,7 +77,7 @@ public class GameMain : MonoBehaviour {
 
 	void UpdateUI(){
 		durationbar.value = (float)duration/totaldistance;
-		energybar.value = energy;
+		energybar.fillAmount = energy;
 		speedtext.text = speed.ToString()+"(AU)";
 	}
 
@@ -87,8 +89,13 @@ public class GameMain : MonoBehaviour {
 			GameOver ();	
 		}
 		if ((energy >= 1)&&(energyball_num<energyball_max)) {
-			EnergyCharged ();	
-			energy = 0;
+			EnergyCharged ();
+			if (energyball_num<energyball_max)
+				energy = 0;
+
+
+
+				
 		}
 
 		if(!IsInvincible)
@@ -122,13 +129,16 @@ public class GameMain : MonoBehaviour {
 			}
 		}
 	//	ObjectPool.GetGameObject ();
+
 		print(i);
 	}
 
-	void EnergyShoot(int i){
-		
-		energypad [i].onClick.RemoveAllListeners ();
-		energypad [i].interactable = false;
+	public void EnergyShoot(){
+		shoot = null;
+		energypad [shootbutton].onClick.RemoveAllListeners ();
+		energypad [shootbutton].interactable = false;
+		if (energyball_num == energyball_max)
+			energy = 0;
 		energyball_num--;
 	}
 
