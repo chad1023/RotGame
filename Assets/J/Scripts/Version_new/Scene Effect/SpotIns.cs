@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SpotIns : MonoBehaviour {
-	/// <summary>
-	/// 
-	/// </summary>
+	
 	public float SpotSpeed;
 
 	private float randonScale;

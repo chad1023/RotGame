@@ -18,20 +18,23 @@ public class CircleParmeter : MonoBehaviour {
 	}
     void OnMouseDown()
     {
-        // get the ray point
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit2D rayhit = Physics2D.Raycast(ray.origin, ray.direction, 10);
-        // change it as vector3
-        Vector3 modifyvecter = new Vector3(rayhit.point.x, rayhit.point.y, 0);
-        Vector3.Normalize(modifyvecter);
-        // modify its magnitude to Radius
-        //modifyvecter *= Radius;
+        if(LimitNumber>0 && clickmanagement.PrefabName!=null){
+            // get the ray point
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit2D rayhit = Physics2D.Raycast(ray.origin, ray.direction, 10);
+            // change it as vector3
+            Vector3 modifyvecter = new Vector3(rayhit.point.x, rayhit.point.y, 0);
+            Vector3.Normalize(modifyvecter);
+            // modify its magnitude to Radius
+            //modifyvecter *= Radius;
 
-        GameObject InsLight= JObjectPool._InstanceJObjectPool.GetGameObject(clickmanagement.PrefabName, modifyvecter);
-        InsLight.transform.localScale=new Vector3(0.8f,0.8f,0.8f);
-        InsLight.transform.SetParent(this.transform);
-        clickmanagement.PrefabName = null;
-        print(transform.gameObject.name);
+            GameObject InsLight= JObjectPool._InstanceJObjectPool.GetGameObject(clickmanagement.PrefabName, modifyvecter);
+            InsLight.transform.localScale=new Vector3(0.8f,0.8f,0.8f);
+            InsLight.transform.SetParent(this.transform);
+            
+            clickmanagement.PrefabName = null;
+            LimitNumber--;
+        }
     }
 
     
