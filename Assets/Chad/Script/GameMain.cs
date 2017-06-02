@@ -83,7 +83,7 @@ public class GameMain : MonoBehaviour {
 		
 		}
 
-		InvokeRepeating ("EnemyCreate", 0f, 2f);
+		InvokeRepeating ("EnemyCreate", 0f, 5f);
 		IsInit = true;
 		start.gameObject.SetActive (false);
 	}
