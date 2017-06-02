@@ -8,10 +8,18 @@ using DG.Tweening;
 public class GameMain : MonoBehaviour {
 	[Header("這邊放東西用的")]
 	private Clickmanagement clickmanagement;
+	public static GameMain _gamemain=null;
+
+	[Header("state")]
+	public bool IsInit;
+	public bool IsInvincible = false;
+
+
 
 	[Header("UI")]
 	public Slider durationbar;
 	public Image energybar;
+	public Button start;
 
 	public Text speedtext;
 	public Text totaldistancetext;
@@ -24,7 +32,6 @@ public class GameMain : MonoBehaviour {
 	public int speed;
 	public int blood;
 	public float energy;
-	public bool IsInvincible = false;
 
 	public string shoot;
 	public int shootbutton;
@@ -47,32 +54,63 @@ public class GameMain : MonoBehaviour {
 
 
 	void Awake(){
+		if (_gamemain == null) {
+			_gamemain = this;
+		} 
+		else if (_gamemain != this) {
+			Destroy (gameObject);
+		}
+		DontDestroyOnLoad (gameObject);
+
 		clickmanagement = GetComponent<Clickmanagement> ();
 		encouter_list.Sort ((x, y) => { return x.e_time.CompareTo(y.e_time); });
+		totaldistancetext.text = totaldistance.ToString()+"(AU)";
+
 
 	}
 
+	public void InitGame(){
+		CancelInvoke ();
+
+		duration = 0;
+		energy = 0;
+		energyball_num = 0;
+		foreach (Button pad in energypad)
+		{
+			foreach (GameObject child in pad.GetComponent<EnergyPad>().enegyball) {
+				child.SetActive (false);
+			}
+		
+		}
+
+		InvokeRepeating ("EnemyCreate", 0f, 2f);
+		IsInit = true;
+		start.gameObject.SetActive (false);
+	}
     
     // Use this for initialization
     void Start () {
 
-		totaldistancetext.text = totaldistance.ToString()+"(AU)";
-		InvokeRepeating ("EnemyCreate",0f, 2f);
+
+
 
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if (IsInit) {
+			duration = Mathf.Clamp (duration + (int)(speed * Time.deltaTime), 0, totaldistance);
+			if (energyball_num < energyball_max)
+				energy = Mathf.Clamp (energy + 0.5f * Time.deltaTime, 0.0f, 1.0f);
 
-		duration= Mathf.Clamp (duration+(int)(speed * Time.deltaTime), 0, totaldistance);
-		if(energyball_num<energyball_max)
-			energy =Mathf.Clamp(energy+0.5f*Time.deltaTime,0.0f,1.0f);
-
-
-		UpdateUI ();
-		UpdateGame ();
-		
+			UpdateUI ();
+			UpdateGame ();
+		} 
+		else if(Input.GetKeyDown(KeyCode.A))
+		{
+			InitGame ();
+		}
     }
 
 
@@ -113,9 +151,13 @@ public class GameMain : MonoBehaviour {
 	}
 	void GameClear(){
 		gametext.text = "Clear!";
+		IsInit = false;
+
 	}
 	void GameOver(){
 		gametext.text = "Game Over";
+		IsInit = false;
+		start.gameObject.SetActive (true);
 	}
 	void EnergyCharged(){
 		Random.seed = System.Guid.NewGuid().GetHashCode();
