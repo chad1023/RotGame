@@ -6,6 +6,9 @@ public class FlyingObjControl : MonoBehaviour {
     public GameEnum.Type_Color TypeColor;
     public float MoveSpeed;
 
+
+    private string exploname="ExploEffect";
+    private bool isExplo=false;
     private bool isFly=true;
     private Collider m_Collider;
 	private GameObject Target;
@@ -60,6 +63,25 @@ public class FlyingObjControl : MonoBehaviour {
     /// </summary>
     void DestroySelf()
     {
+
+    }
+    /// <summary>
+    /// This function is called when the behaviour becomes disabled or inactive.
+    /// </summary>
+    void OnDisable()
+    {
+        isExplo=false;   
+    }
+    /// <summary>
+    /// HIt and destory itself than
+    /// </summary>
+    public void DestoryByHit()
+    {
+        if(!isExplo){
+            isExplo=true;
+            GameObject tempExplo= JObjectPool._InstanceJObjectPool.GetGameObject(exploname,transform.position);
+			JObjectPool._InstanceJObjectPool.DelayRecovery(tempExplo,1.5f);
+        }
 
     }
 }

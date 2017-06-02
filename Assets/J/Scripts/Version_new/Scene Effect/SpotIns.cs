@@ -31,7 +31,7 @@ public class SpotIns : MonoBehaviour {
 		tempSpot=JObjectPool._InstanceJObjectPool.GetGameObject(Name,pos);
 		tempSpot.GetComponent<SpotFly>().speed=SpotSpeed;
 		yield return new WaitForSeconds(randonTime);
-		randonTime=Random.Range(5,10.0f);
+		randonTime=Random.Range(3,5.0f);
 		canSpawn=true;
 	}
 }
