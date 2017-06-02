@@ -13,6 +13,10 @@ public class RocketControl : MonoBehaviour {
 	void Update () {
 		
 	}
-	
-	
+    private void OnTriggerEnter(Collider other)
+    {
+        FlyingObjControl _FlyingObjControl = other.GetComponent<FlyingObjControl>();
+        if (_FlyingObjControl) { }
+    }
+
 }
