@@ -7,7 +7,7 @@ using UnityEngine;
 public class PrefabSetting
 {
     public GameObject Prefab;
-    public bool IsAutoGenerate = true;
+    public bool AutoGenerate = true;
     public int initailSize;
     public string PrefabName
     {
@@ -66,11 +66,14 @@ public class JObjectPool : MonoBehaviour
         ShowDebug("Start Initialize JObjectPool");
         for (int i = 0; i < m_PrefabSetting.Length; i++)
         {
-            if (m_PrefabSetting[i].IsAutoGenerate)
+            if (m_PrefabSetting[i].AutoGenerate)
             {
                 GameObject tempParent = new GameObject();
-                tempParent.name = m_PrefabSetting[i].PoolName;
-                List<GameObject> m_list = new List<GameObject>();
+                if (m_PrefabSetting[i].PoolName != "")
+                    tempParent.name = m_PrefabSetting[i].PoolName;
+                else
+                    tempParent.name = "JObject pool [ " + m_PrefabSetting[i].PrefabName + "s ]";
+                List <GameObject> m_list = new List<GameObject>();
                 for (int j = 0; j < m_PrefabSetting[i].initailSize; j++)
                 {
                     GameObject temp = (GameObject)Instantiate(m_PrefabSetting[i].Prefab, tempParent.transform);
@@ -162,11 +165,11 @@ public class JObjectPool : MonoBehaviour
     {
         return GetGameObject(s, pos, Quaternion.identity);
     }
-    
-    
+
+
 
     /// <summary>
-    /// Recovery Gameobject
+    /// Recovery Gameobject and set its position to (0,0,0)
     /// </summary>
     /// <param name="s"></param>
     public void Recovery(GameObject g)
@@ -179,22 +182,57 @@ public class JObjectPool : MonoBehaviour
 	/// <param name="s"></param>
     public void Recovery(GameObject g, Vector3 pos)
     {
-        g.SetActive(false);
-        g.transform.position = pos;
         string s = g.name;
         if (s.Contains("Clone"))
         {
             s = s.Replace("(Clone)", "");
         }
-        if (m_DictionaryForParent.ContainsKey(s))
+        if (m_Dictionary.ContainsKey(s))
+        {
+            g.SetActive(false);
+            g.transform.position = pos;
             g.transform.SetParent(m_DictionaryForParent[s].transform);
+        }
+        else
+            ShowError(s + " doesn't exist in JObject pool");
+    }
+
+    /// <summary>
+    /// Recovery Certain Gameobjects and set their position to (0,0,0)
+    /// </summary>
+    /// <param name="s"></param>
+    /// <param name="pos"></param>
+    public void RecoveryCertainObj(string s)
+    {
+        RecoveryCertainObj(s, Vector3.zero);
+    }
+
+    /// <summary>
+    /// Recovery Certain Gameobjects and set their position
+    /// </summary>
+    /// <param name="s"></param>
+    /// <param name="pos"></param>
+    public void RecoveryCertainObj(string s,Vector3 pos)
+    {
+        if (m_Dictionary.ContainsKey(s))
+        {
+            for (int i = 0; i < m_Dictionary[s].Count; i++)
+            {
+                m_Dictionary[s][i].SetActive(false);
+                m_Dictionary[s][i].transform.position = pos;
+                m_Dictionary[s][i].transform.SetParent(m_DictionaryForParent[s].transform);
+            }
+        }
+        else
+            ShowError(s + " doesn't exist in JObject pool");
     }
 
     /// <summary>
     /// Delay f seconds than recovery object
     /// </summary>
     /// <param name="s"></param>
-    public IEnumerator DelayRecovery(GameObject g,float f){
+    public IEnumerator DelayRecovery(GameObject g, float f)
+    {
 
         yield return new WaitForSeconds(f);
         Recovery(g);

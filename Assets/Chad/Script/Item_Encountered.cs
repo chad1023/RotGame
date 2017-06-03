@@ -14,4 +14,6 @@ public class Item_Encountered{
 	}
 
 	public int e_time;
+	public Vector3 pos;
+	public bool encoutered=false;
 }
