@@ -20,6 +20,7 @@ public class GameMain : MonoBehaviour {
 
 	[Header("state")]
 	public GameState state=GameState.Init;
+	public int gamelevel;
 	public bool IsInvincible = false;
 	public int totaldistance;
 	public int speed;
