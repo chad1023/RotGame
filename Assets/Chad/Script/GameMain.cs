@@ -28,6 +28,7 @@ public class GameMain : MonoBehaviour {
 	public float energy;
 	public string shoot;
 	public int shootbutton;
+	public AudioSource bgm_manager;
 	[SerializeField]
 	private int duration;
 	public int energyball_num;
@@ -84,6 +85,8 @@ public class GameMain : MonoBehaviour {
 	}
 
 	public void InitGame(){
+		bgm_manager.Play ();
+
 		foreach (GameObject clone in clones) {
 			Destroy (clone);
 		}
@@ -116,7 +119,7 @@ public class GameMain : MonoBehaviour {
     
     // Use this for initialization
     void Start () {
-
+		bgm_manager = GetComponent<AudioSource> ();
 
 
 
@@ -257,11 +260,11 @@ public class GameMain : MonoBehaviour {
 		energyball_num--;
 	}
 
-	void BloodDecrease(){
+	public void BloodDecrease(){
 		blood--;
 	
 	}
-	void BloodIncrease(){
+	public void BloodIncrease(){
 		blood++;
 	}
 

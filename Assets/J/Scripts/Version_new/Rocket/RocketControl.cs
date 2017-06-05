@@ -10,9 +10,10 @@ public class RocketControl : MonoBehaviour {
 
 	[Space]
 	private string exploname="ExploEffect";
+	AudioSource exploaudio;
 	// Use this for initialization
 	void Start () {
-		
+		exploaudio = GetComponent<AudioSource> ();
 	}
 	
 	// Update is called once per frame
@@ -25,6 +26,9 @@ public class RocketControl : MonoBehaviour {
         if (_FlyingObjControl) { 
 			_FlyingObjControl.DestoryByHit();
 			JObjectPool._InstanceJObjectPool.Recovery(_FlyingObjControl.gameObject);
+			GameMain._gamemain.BloodDecrease ();
+			exploaudio.Play ();
+
 		}
     }
 
