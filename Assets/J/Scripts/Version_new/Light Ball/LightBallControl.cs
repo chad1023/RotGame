@@ -11,6 +11,7 @@ public class LightBallControl : MonoBehaviour {
     public CircleParmeter _CircleParmeter;
     Animator m_Animator;
 	AudioSource audio;
+	public AudioClip[] sound=new AudioClip[2];
 
     float lasttime;
 	// Use this for initialization
@@ -53,10 +54,12 @@ public class LightBallControl : MonoBehaviour {
         {
             lasttime = 0;
             transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
-			audioright.Play ();
+			audio.clip = sound [0];
+			audio.Play ();
         }
         else{
-			audiowrong.Play ();
+			audio.clip = sound [1];
+			audio.Play ();
             _CircleParmeter.LimitNumber++;
             Init();
             JObjectPool._InstanceJObjectPool.Recovery(this.gameObject,Vector3.zero);
