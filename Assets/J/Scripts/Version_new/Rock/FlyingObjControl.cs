@@ -15,6 +15,7 @@ public class FlyingObjControl : MonoBehaviour {
     private Vector3 Dir;
     private Animator m_Animator;
     private Rigidbody m_Rigidbody;
+	public GameObject particle;
     // Use this for initialization
     void Start () {
         m_Animator = GetComponent<Animator>();
@@ -43,7 +44,7 @@ public class FlyingObjControl : MonoBehaviour {
             DisappearSelf();
         else
             DestroySelf();
-
+		JObjectPool._InstanceJObjectPool.GetGameObject (particle.name, transform.position);
         // call the staic JObjectPool instance ,then recovery this
         JObjectPool._InstanceJObjectPool.Recovery(this.gameObject, Vector3.zero);
     }
@@ -54,7 +55,8 @@ public class FlyingObjControl : MonoBehaviour {
     /// </summary>
     void DisappearSelf()
     {
-
+		
+	
         
     }
 
