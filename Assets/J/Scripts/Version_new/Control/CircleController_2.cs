@@ -34,12 +34,12 @@ public class CircleController_2 : MonoBehaviour
     Jtouch m_Jtouch;
     void Update()
     {
-
-#if UNITY_EDITOR || UNITY_STANDALONE
-        MouseInput();   // 滑鼠偵測
-#elif UNITY_ANDROID
-		MobileInput();  // 觸碰偵測
-#endif
+		MouseInput(); 
+//#if UNITY_EDITOR || UNITY_STANDALONE
+//        MouseInput();   // 滑鼠偵測
+//#elif UNITY_ANDROID
+//		MobileInput();  // 觸碰偵測
+//#endif
         if (isTouch)
         {
             if(RotateLimit)
