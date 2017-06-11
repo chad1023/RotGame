@@ -81,6 +81,9 @@ public class CircleController_2 : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             m_screenPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+            //如果按太下面就不旋轉
+            if(m_screenPos.y<200)
+                return;
             isTouch = true;
         }
 
