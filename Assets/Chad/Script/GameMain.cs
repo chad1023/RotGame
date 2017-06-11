@@ -147,6 +147,7 @@ public class GameMain : MonoBehaviour {
 		planet_list.Sort ((x, y) => { return x.e_time.CompareTo(y.e_time); });
 
 
+		totaldistance = data.totaldistance;
 
 		foreach (planet item in planet_list) {
 			float rate = item.e_time/(float)totaldistance;

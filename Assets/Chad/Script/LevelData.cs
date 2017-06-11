@@ -8,5 +8,6 @@ public class LevelData {
 	public List<planet> planet_list;
 	public Sprite planet_go;
 	public Sprite planet_arrive;
+	public int totaldistance=3000;
 
 }
