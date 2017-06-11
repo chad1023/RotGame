@@ -483,7 +483,7 @@ AnimationClip:
   m_IsEmpty: 0
   m_Events:
   - time: 8.55
-    functionName: initgame
+    functionName: InitGame
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

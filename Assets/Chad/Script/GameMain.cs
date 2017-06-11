@@ -20,7 +20,7 @@ public class GameMain : MonoBehaviour {
 
 	[Header("state")]
 	public GameState state=GameState.Init;
-	public int gamelevel;
+	public static int gamelevel;
 	public bool IsInvincible = false;
 	public int totaldistance;
 	public int speed;
@@ -58,17 +58,6 @@ public class GameMain : MonoBehaviour {
 
 	private List<GameObject> clones=new List<GameObject>();
 
-
-
-
-
-
-
-
-
-
-
-
 	void Awake(){
 		if (_gamemain == null) {
 			_gamemain = this;
@@ -76,7 +65,7 @@ public class GameMain : MonoBehaviour {
 		else if (_gamemain != this) {
 			Destroy (gameObject);
 		}
-		DontDestroyOnLoad (gameObject);
+
 
 		clickmanagement = GetComponent<Clickmanagement> ();
 		encouter_list.Sort ((x, y) => { return x.e_time.CompareTo(y.e_time); });
@@ -200,32 +189,38 @@ public class GameMain : MonoBehaviour {
 			foreach (Item_Encountered item in encouter_list)
 			{
 				if (!item.encoutered) {
-					if (Mathf.Abs(duration - item.e_time) < Time.deltaTime * speed) {
+					if ((Mathf.Abs(duration - item.e_time) < Time.deltaTime * speed)||(duration>item.e_time)) {
 						print ("Encouter " + item.PrefabName);
-						GameObject clone =(GameObject)Instantiate (item.Prefab, item.pos, Quaternion.identity);
+						//call invoke
+						StartCoroutine(EnemyCreate(item));
 						item.encoutered = true;
-						clones.Add (clone);
+				
 					}
 				}
 			
 			}
 		}
 	}
-	void GameClear(){
-		
+	void GameFinish(){
 		state = GameState.Finish; 
-		gametext.text = "Clear!";
+		shoot="";
 		CancelInvoke ();
 		Recovery ();
+	
+	}
+
+	void GameClear(){
+		GameFinish ();
+		gametext.text = "Clear!";
+	
 		start.SetActive (true);
 
 
 	}
 	void GameOver(){
-		state = GameState.Finish; 
+		GameFinish ();
 		gametext.text = "Game Over";
-		CancelInvoke ();
-		Recovery ();
+
 		start.SetActive (true);
 
 	}
@@ -268,15 +263,17 @@ public class GameMain : MonoBehaviour {
 		blood++;
 	}
 
-	void EnemyCreate(){
+	IEnumerator EnemyCreate(Item_Encountered enemy){
 		if (!IsInvincible) {
 			Random.seed = System.Guid.NewGuid ().GetHashCode ();
-			int i = Random.Range (0, enemy_list.Count);
+			int i = Random.Range (0, enemy.type.Count);
 
 			Vector2 project = (Random.insideUnitCircle).normalized*enemy_radius;
 			Vector3 pos = new Vector3 (project.x, project.y, 0);
-			GameObject enemy = GetGameObject (enemy_list [i], pos);
-			enemy.GetComponent<FlyingObjControl> ().MoveSpeed = 5;
+			GameObject enemy_clone = GetGameObject (enemy.Prefab, pos);
+			enemy_clone.GetComponent<FlyingObjControl> ().MoveSpeed = 5;
+			yield return new WaitForSeconds(2);
+			enemy.encoutered = false;
 		}
 	}
 	void SetClickItem(string s,int button_i){

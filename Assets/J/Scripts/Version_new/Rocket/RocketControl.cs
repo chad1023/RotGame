@@ -10,10 +10,12 @@ public class RocketControl : MonoBehaviour {
 
 	[Space]
 	private string exploname="ExploEffect";
+	private GameMain gamemain;
 	AudioSource exploaudio;
 	// Use this for initialization
 	void Start () {
 		exploaudio = GetComponent<AudioSource> ();
+
 	}
 	
 	// Update is called once per frame
