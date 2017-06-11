@@ -1757,7 +1757,7 @@ ParticleSystem:
       m_PostInfinity: 2
       m_RotationOrder: 4
     minMaxState: 0
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: -24185732
@@ -6705,7 +6705,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbda6e45a8e554e3596c93c588320e5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpotPosition: {fileID: 544347115}
+  SpotPosition: {fileID: 1608237288}
   SpotSpeed: 0.05
 --- !u!114 &1898872697
 MonoBehaviour:
