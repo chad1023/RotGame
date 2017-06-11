@@ -191,7 +191,8 @@ public class GameMain : MonoBehaviour {
 
 	void UpdateGame(){
 		if (duration == totaldistance) {
-			GameClear ();
+			GameFinish ();
+			animator.Play ("Through");
 		}
 		if (blood == 0) {
 			GameOver ();	
@@ -227,16 +228,13 @@ public class GameMain : MonoBehaviour {
 		state = GameState.Finish; 
 		shoot="";
 		CancelInvoke ();
-		Recovery ();
 
-
-	
 	}
 
 	void GameClear(){
-		GameFinish ();
 		gametext.text = "Clear!";
 
+		Recovery ();
 		gamelevel += 1;
 		if (gamelevel >= levelmanager.maxlevel) {
 			gamelevel -= 1;
@@ -246,8 +244,8 @@ public class GameMain : MonoBehaviour {
 
 	}
 	void GameOver(){
-		GameFinish ();
 		gametext.text = "Game Over";
+		Recovery ();
 
 		start.SetActive (true);
 

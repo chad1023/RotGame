@@ -25,7 +25,7 @@ public class RocketControl : MonoBehaviour {
     private void OnTriggerEnter(Collider other)
     {
         FlyingObjControl _FlyingObjControl = other.GetComponent<FlyingObjControl>();
-        if (_FlyingObjControl) { 
+		if ((_FlyingObjControl)&&(GameMain._gamemain.state==GameState.Progress)) { 
 			_FlyingObjControl.DestoryByHit();
 			JObjectPool._InstanceJObjectPool.Recovery(_FlyingObjControl.gameObject);
 			GameMain._gamemain.BloodDecrease ();
