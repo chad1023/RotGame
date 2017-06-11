@@ -28,7 +28,7 @@ public class GameMain : MonoBehaviour {
 	public float energy;
 	public string shoot;
 	public int shootbutton;
-	public Vector3 shootpos;
+
 	public AudioSource bgm_manager;
 	public Animator animator;
 	[SerializeField]
@@ -44,12 +44,14 @@ public class GameMain : MonoBehaviour {
 	public Text totaldistancetext;
 	public Text gametext;
 	public Button[] energypad = new Button [5];
+	public Image marker;
+	public Canvas canvas;
 	 
-	public Transform[] padpos = new Transform[5];
-	[Header("enemy")]
-	public List<Item_Encountered>encouter_list;
-//	public List<GameObject> enemy_list;
 
+	[Header("enemy")]
+	public List<Item_Encountered>enemy_list;
+	public List<planet>planet_list;
+	public List<GameObject> tem_list;
 
 
 
@@ -59,7 +61,8 @@ public class GameMain : MonoBehaviour {
 	public int enemy_radius;
 	public List<GameObject> energyball;
 	public LevelManager levelmanager;
-
+	public RectTransform markerstart;
+	public RectTransform markerend;
 
 	private List<GameObject> clones=new List<GameObject>();
 
@@ -73,14 +76,21 @@ public class GameMain : MonoBehaviour {
 
 
 		clickmanagement = GetComponent<Clickmanagement> ();
-		encouter_list.Sort ((x, y) => { return x.e_time.CompareTo(y.e_time); });
+
+
 		levelmanager = GetComponent<LevelManager> ();
 
 
 	}
 
 	 public void InitGame(){
+		
+
 		bgm_manager.Stop ();
+		foreach (GameObject item in tem_list) {
+			Destroy (item);
+		}
+		tem_list.Clear ();
 		LoadLevel ();
 
 		//init state value
@@ -125,8 +135,23 @@ public class GameMain : MonoBehaviour {
 	public void LoadLevel(){
 		LevelData data = levelmanager.getdata (gamelevel);
 		
-		encouter_list = data.encouter_list;
-		//load totaldistance,encounter_list,enemy_list
+		enemy_list = data.enemy_list;
+		enemy_list.Sort ((x, y) => { return x.e_time.CompareTo(y.e_time); });
+		planet_list = data.planet_list;
+		planet_list.Sort ((x, y) => { return x.e_time.CompareTo(y.e_time); });
+
+		foreach (planet item in planet_list) {
+			float rate = item.e_time/(float)totaldistance;
+			print (item.e_time);
+			Image marker_clone =(Image)Instantiate (marker, markerstart.transform);
+			print (rate);
+			marker_clone.transform.position = rate*(markerend.transform.position-markerstart.transform.position)+markerstart.transform.position;
+			tem_list.Add (marker_clone.gameObject);
+
+		}
+
+
+
 	}
     
     // Use this for initialization
@@ -175,7 +200,7 @@ public class GameMain : MonoBehaviour {
     }
 
 	void Recovery(){
-		foreach (Item_Encountered item in encouter_list) {
+		foreach (Item_Encountered item in enemy_list) {
 			foreach (GameObject enemy in item.type) {
 				JObjectPool._InstanceJObjectPool.RecoveryCertainObj (enemy.name);
 			}
@@ -209,10 +234,23 @@ public class GameMain : MonoBehaviour {
 
 				
 		}
+		foreach (planet item in planet_list) {
+			if (!item.encoutered) {
+				if(Mathf.Abs(duration - item.e_time) < Time.deltaTime * speed){
+					print ("Encouter planet: " + item.prefab.name);
+					//call invoke
+					GameObject tem = (GameObject)Instantiate(item.prefab,item.pos,Quaternion.identity);
+					item.encoutered = true;
+					tem_list.Add (tem);
+				}
+				
+			}
+		
+		}
 
 		if(!IsInvincible)
 		{
-			foreach (Item_Encountered item in encouter_list)
+			foreach (Item_Encountered item in enemy_list)
 			{
 				if (!item.encoutered) {
 					if ((Mathf.Abs(duration - item.e_time) < Time.deltaTime * speed)||(duration>item.e_time)) {
@@ -226,12 +264,14 @@ public class GameMain : MonoBehaviour {
 			
 			}
 		}
+
+
 	}
 	void GameFinish(){
 		state = GameState.Finish; 
 		shoot="";
 		shootbutton = 0;
-		shootpos = Vector3.zero;
+
 		CancelInvoke ();
 
 	}
@@ -309,7 +349,7 @@ public class GameMain : MonoBehaviour {
 	void SetClickItem(string s,int button_i){
 		shoot = s;
 		shootbutton = button_i;
-		shootpos = padpos [button_i].position;
+
 
 	}
 

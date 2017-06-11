@@ -4,7 +4,8 @@ using UnityEngine;
 
 [System.Serializable]
 public class LevelData {
-	public List<Item_Encountered>encouter_list;
+	public List<Item_Encountered>enemy_list;
+	public List<planet> planet_list;
 	public Sprite background;
 
 }

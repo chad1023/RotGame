@@ -11,3 +11,11 @@ public class Item_Encountered{
 	public bool encoutered=false;
 	public List <GameObject> type;
 }
+[System.Serializable]
+public class planet
+{
+	public GameObject prefab;
+	public Vector3 pos;
+	public int e_time;
+	public bool encoutered=false;
+}
