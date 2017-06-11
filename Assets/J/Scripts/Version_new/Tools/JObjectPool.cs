@@ -118,6 +118,8 @@ public class JObjectPool : MonoBehaviour
     /// <param name="s"></param>
     public GameObject GetGameObject(string s, Vector3 pos, Quaternion qua)
     {
+        if (s == null)
+            return null;
         //尋找物件池裡有沒有這個名字的物件
         if (m_Dictionary.ContainsKey(s))
         {

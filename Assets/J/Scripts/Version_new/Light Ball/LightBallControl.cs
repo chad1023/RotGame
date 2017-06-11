@@ -13,6 +13,7 @@ public class LightBallControl : MonoBehaviour {
 	AudioSource audio;
 	public AudioClip[] sound=new AudioClip[2];
 
+    public GameObject Explo;
     float lasttime;
 	// Use this for initialization
 	void Start () {
@@ -35,7 +36,13 @@ public class LightBallControl : MonoBehaviour {
         {
             _CircleParmeter.LimitNumber++;
             Init();
+            if (Explo != null)
+            {
+                GameObject tempEx = JObjectPool._InstanceJObjectPool.GetGameObject(Explo.name, transform.position);
+                JObjectPool._InstanceJObjectPool.DelayRecovery(tempEx, 1.5f);
+            }
             JObjectPool._InstanceJObjectPool.Recovery(this.gameObject,Vector3.zero);
+
         }
     }
     void OnTriggerEnter(Collider other)
@@ -57,6 +64,7 @@ public class LightBallControl : MonoBehaviour {
 			audio.clip = sound [0];
 			audio.Play ();
         }
+        //如果碰撞的顏色不一樣的話，爆炸並且回收自己
         else{
 			audio.clip = sound [1];
 			audio.Play ();

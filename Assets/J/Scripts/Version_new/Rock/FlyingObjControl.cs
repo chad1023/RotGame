@@ -2,35 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlyingObjControl : MonoBehaviour {
+public class FlyingObjControl : MonoBehaviour
+{
     public GameEnum.Type_Color TypeColor;
     public float MoveSpeed;
 
 
-    private string exploname="ExploEffect";
-    private bool isExplo=false;
-    private bool isFly=true;
+    private string exploname = "ExploEffect";
+    private bool isExplo = false;
+    private bool isFly = true;
     private Collider m_Collider;
-	private GameObject Target;
+    private GameObject Target;
     private Vector3 Dir;
     private Animator m_Animator;
     private Rigidbody m_Rigidbody;
-	public GameObject particle;
+    public GameObject particle;
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         m_Animator = GetComponent<Animator>();
-		Target=GameObject.Find("Rocket");
-        m_Collider=GetComponent<Collider>();
-        m_Rigidbody=GetComponent<Rigidbody>();
+        Target = GameObject.Find("Rocket");
+        m_Collider = GetComponent<Collider>();
+        m_Rigidbody = GetComponent<Rigidbody>();
     }
-	
-	// Update is called once per frame
-	void Update () {
-		Dir = Target.transform.position - transform.position;
-        
-	}
 
-    
+    // Update is called once per frame
+    void Update()
+    {
+        Dir = Target.transform.position - transform.position;
+
+    }
+
+
     void FixedUpdate()
     {
         if (isFly)
@@ -44,20 +47,21 @@ public class FlyingObjControl : MonoBehaviour {
             DisappearSelf();
         else
             DestroySelf();
-		JObjectPool._InstanceJObjectPool.GetGameObject (particle.name, transform.position);
+        GameObject tempparticle = JObjectPool._InstanceJObjectPool.GetGameObject(particle.name, transform.position);
+        JObjectPool._InstanceJObjectPool.DelayRecovery(tempparticle, 3f);
         // call the staic JObjectPool instance ,then recovery this
         JObjectPool._InstanceJObjectPool.Recovery(this.gameObject, Vector3.zero);
     }
 
-    
+
     /// <summary>
     /// if Color is the same ,then disappear-self ,go play the Disappear animation
     /// </summary>
     void DisappearSelf()
     {
-		
-	
-        
+
+
+
     }
 
     /// <summary>
@@ -72,17 +76,18 @@ public class FlyingObjControl : MonoBehaviour {
     /// </summary>
     void OnDisable()
     {
-        isExplo=false;   
+        isExplo = false;
     }
     /// <summary>
     /// HIt and destory itself than
     /// </summary>
     public void DestoryByHit()
     {
-        if(!isExplo){
-            isExplo=true;
-            GameObject tempExplo= JObjectPool._InstanceJObjectPool.GetGameObject(exploname,transform.position);
-			JObjectPool._InstanceJObjectPool.DelayRecovery(tempExplo,1.5f);
+        if (!isExplo)
+        {
+            isExplo = true;
+            GameObject tempExplo = JObjectPool._InstanceJObjectPool.GetGameObject(exploname, transform.position);
+            JObjectPool._InstanceJObjectPool.DelayRecovery(tempExplo, 1.5f);
         }
 
     }

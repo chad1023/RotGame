@@ -3,23 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class CircleParmeter : MonoBehaviour {
+public class CircleParmeter : MonoBehaviour
+{
     public GameMain gamemain;
     public int LimitNumber;
     public float Radius;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    // Use this for initialization
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
     void OnMouseDown()
     {
-		if(LimitNumber>0 && gamemain.shoot!=""){
+        if (LimitNumber > 0 && gamemain.shoot != "" && gamemain.shoot != null)
+        {
             // get the ray point
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D rayhit = Physics2D.Raycast(ray.origin, ray.direction, 10);
@@ -29,19 +33,19 @@ public class CircleParmeter : MonoBehaviour {
             // modify its magnitude to Radius
             modifyvecter *= Radius;
 
-			GameObject InsLight= JObjectPool._InstanceJObjectPool.GetGameObject(gamemain.shoot, transform.position);
-            InsLight.transform.localScale=new Vector3(0.8f,0.8f,0.8f);
+            GameObject InsLight = JObjectPool._InstanceJObjectPool.GetGameObject(gamemain.shoot, transform.position);
+            InsLight.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
             InsLight.transform.SetParent(this.transform);
-            Collider col=InsLight.GetComponent<Collider>();
-            col.enabled=false;
-            Tweener tweener =InsLight.transform.DOMove(modifyvecter,1f);
+            Collider col = InsLight.GetComponent<Collider>();
+            col.enabled = false;
+            Tweener tweener = InsLight.transform.DOMove(modifyvecter, 1f);
             tweener.SetEase(Ease.OutQuad);
-            tweener.OnComplete(()=>{col.enabled=true;});
-			gamemain.EnergyShoot ();
-            
-			LimitNumber--;
+            tweener.OnComplete(() => { col.enabled = true; });
+            gamemain.EnergyShoot();
+
+            LimitNumber--;
         }
     }
 
-    
+
 }
