@@ -46,6 +46,8 @@ public class GameMain : MonoBehaviour {
 	public Button[] energypad = new Button [5];
 	public Image marker;
 	public Canvas canvas;
+	public SpriteRenderer planet_go;
+	public SpriteRenderer planet_arrive;
 	 
 
 	[Header("enemy")]
@@ -137,8 +139,14 @@ public class GameMain : MonoBehaviour {
 		
 		enemy_list = data.enemy_list;
 		enemy_list.Sort ((x, y) => { return x.e_time.CompareTo(y.e_time); });
+		planet_go.sprite = data.planet_go;
+		planet_arrive.sprite = data.planet_arrive;
+
+
 		planet_list = data.planet_list;
 		planet_list.Sort ((x, y) => { return x.e_time.CompareTo(y.e_time); });
+
+
 
 		foreach (planet item in planet_list) {
 			float rate = item.e_time/(float)totaldistance;

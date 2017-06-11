@@ -701,6 +701,8 @@ MonoBehaviour:
   - {fileID: 1311524823}
   marker: {fileID: 114697750292516420, guid: aa57f2a32ba5845ed8018e5e9ec4a9f2, type: 2}
   canvas: {fileID: 1273033885}
+  planet_go: {fileID: 493417061}
+  planet_arrive: {fileID: 1608237289}
   enemy_list: []
   planet_list:
   - prefab: {fileID: 0}
@@ -754,7 +756,8 @@ MonoBehaviour:
       pos: {x: 2.3, y: 5.8, z: 2}
       e_time: 200
       encoutered: 0
-    background: {fileID: 0}
+    planet_go: {fileID: 21300000, guid: 182beae68f4c743ada783ff0ab4d880e, type: 3}
+    planet_arrive: {fileID: 21300000, guid: a3f03b4ec039a464aa5387f00b3da467, type: 3}
   - enemy_list:
     - PrefabName: rock
       pos: {x: 0, y: 0, z: 0}
@@ -767,10 +770,12 @@ MonoBehaviour:
       pos: {x: 0, y: 5.8, z: 2}
       e_time: 0
       encoutered: 0
-    background: {fileID: 0}
+    planet_go: {fileID: 0}
+    planet_arrive: {fileID: 0}
   - enemy_list: []
     planet_list: []
-    background: {fileID: 0}
+    planet_go: {fileID: 0}
+    planet_arrive: {fileID: 0}
 --- !u!1 &203152053
 GameObject:
   m_ObjectHideFlags: 0
@@ -1141,7 +1146,7 @@ Transform:
   m_GameObject: {fileID: 493417059}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -9, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 188397079}
   m_RootOrder: 12
@@ -1887,7 +1892,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -20
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -1960,7 +1965,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -74087592
+  randomSeed: -753587810
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -6240,7 +6245,7 @@ Transform:
   m_GameObject: {fileID: 1608237287}
   m_LocalRotation: {x: 0, y: 0, z: 0.34947154, w: 0.936947}
   m_LocalPosition: {x: 0, y: 9, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 188397079}
   m_RootOrder: 13

@@ -6,6 +6,7 @@ using UnityEngine;
 public class LevelData {
 	public List<Item_Encountered>enemy_list;
 	public List<planet> planet_list;
-	public Sprite background;
+	public Sprite planet_go;
+	public Sprite planet_arrive;
 
 }
