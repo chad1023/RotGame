@@ -29,7 +29,7 @@ public class CircleParmeter : MonoBehaviour {
             // modify its magnitude to Radius
             modifyvecter *= Radius;
 
-			GameObject InsLight= JObjectPool._InstanceJObjectPool.GetGameObject(gamemain.shoot, gamemain.shootpos);
+			GameObject InsLight= JObjectPool._InstanceJObjectPool.GetGameObject(gamemain.shoot, transform.position);
             InsLight.transform.localScale=new Vector3(0.8f,0.8f,0.8f);
             InsLight.transform.SetParent(this.transform);
             Collider col=InsLight.GetComponent<Collider>();
