@@ -743,6 +743,7 @@ MonoBehaviour:
     - PrefabName: rock
       pos: {x: 0, y: 0, z: 0}
       e_time: 0
+      period: 5
       encoutered: 0
       type:
       - {fileID: 1284113715694686, guid: b0d825eeeff914707bc15ef83e6c2e78, type: 2}
@@ -763,6 +764,7 @@ MonoBehaviour:
     - PrefabName: rock
       pos: {x: 0, y: 0, z: 0}
       e_time: 0
+      period: 3
       encoutered: 0
       type:
       - {fileID: 1128060719293374, guid: 2e7e013f069fd48af88a050258a03373, type: 2}
@@ -771,8 +773,8 @@ MonoBehaviour:
       pos: {x: 0, y: 5.8, z: 2}
       e_time: 0
       encoutered: 0
-    planet_go: {fileID: 0}
-    planet_arrive: {fileID: 0}
+    planet_go: {fileID: 21300000, guid: a3f03b4ec039a464aa5387f00b3da467, type: 3}
+    planet_arrive: {fileID: 21300000, guid: 182beae68f4c743ada783ff0ab4d880e, type: 3}
     totaldistance: 5000
   - enemy_list: []
     planet_list: []

@@ -8,6 +8,7 @@ public class Item_Encountered{
 	public string PrefabName;
 	public Vector3 pos;
 	public int e_time;
+	public float period;
 	public bool encoutered=false;
 	public List <GameObject> type;
 }

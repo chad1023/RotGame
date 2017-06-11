@@ -151,9 +151,9 @@ public class GameMain : MonoBehaviour {
 
 		foreach (planet item in planet_list) {
 			float rate = item.e_time/(float)totaldistance;
-			print (item.e_time);
+		
 			Image marker_clone =(Image)Instantiate (marker, markerstart.transform);
-			print (rate);
+		
 			marker_clone.transform.position = rate*(markerend.transform.position-markerstart.transform.position)+markerstart.transform.position;
 			tem_list.Add (marker_clone.gameObject);
 
@@ -346,12 +346,12 @@ public class GameMain : MonoBehaviour {
 		if (!IsInvincible) {
 			Random.seed = System.Guid.NewGuid ().GetHashCode ();
 			int i = Random.Range (0, enemy.type.Count);
-
+			float t = Random.Range (0, 1f);
 			Vector2 project = (Random.insideUnitCircle).normalized*enemy_radius;
 			Vector3 pos = new Vector3 (project.x, project.y, 0);
 			GameObject enemy_clone = GetGameObject (enemy.type[i], pos);
 			enemy_clone.GetComponent<FlyingObjControl> ().MoveSpeed = 5;
-			yield return new WaitForSeconds(5);
+			yield return new WaitForSeconds(enemy.period-t);
 			enemy.encoutered = false;
 		}
 	}
