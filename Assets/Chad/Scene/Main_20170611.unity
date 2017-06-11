@@ -947,7 +947,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &393563606
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1934,7 +1934,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -320313910
+  randomSeed: -74087592
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -2358,8 +2358,8 @@ ParticleSystem:
     angle: 25
     length: 5
     boxX: 6
-    boxY: 1
-    boxZ: 1
+    boxY: 0
+    boxZ: 0
     arc: 360
     placementMode: 0
     m_Mesh: {fileID: 0}
@@ -2668,7 +2668,7 @@ ParticleSystem:
         m_RotationOrder: 4
       minMaxState: 0
     curve:
-      scalar: 0.7853982
+      scalar: 0.7853981
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -7117,7 +7117,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1898872693}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbda6e45a8e554e3596c93c588320e5c, type: 3}
   m_Name: 
