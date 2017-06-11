@@ -28,6 +28,7 @@ public class GameMain : MonoBehaviour {
 	public float energy;
 	public string shoot;
 	public int shootbutton;
+	public Vector3 shootpos;
 	public AudioSource bgm_manager;
 	public Animator animator;
 	[SerializeField]
@@ -44,6 +45,7 @@ public class GameMain : MonoBehaviour {
 	public Text gametext;
 	public Button[] energypad = new Button [5];
 	 
+	public Transform[] padpos = new Transform[5];
 	[Header("enemy")]
 	public List<Item_Encountered>encouter_list;
 //	public List<GameObject> enemy_list;
@@ -57,6 +59,7 @@ public class GameMain : MonoBehaviour {
 	public int enemy_radius;
 	public List<GameObject> energyball;
 	public LevelManager levelmanager;
+
 
 	private List<GameObject> clones=new List<GameObject>();
 
@@ -227,6 +230,8 @@ public class GameMain : MonoBehaviour {
 	void GameFinish(){
 		state = GameState.Finish; 
 		shoot="";
+		shootbutton = 0;
+		shootpos = Vector3.zero;
 		CancelInvoke ();
 
 	}
@@ -246,7 +251,6 @@ public class GameMain : MonoBehaviour {
 	void GameOver(){
 		gametext.text = "Game Over";
 		Recovery ();
-
 		start.SetActive (true);
 
 	}
@@ -305,6 +309,7 @@ public class GameMain : MonoBehaviour {
 	void SetClickItem(string s,int button_i){
 		shoot = s;
 		shootbutton = button_i;
+		shootpos = padpos [button_i].position;
 
 	}
 

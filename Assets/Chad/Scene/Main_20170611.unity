@@ -682,6 +682,7 @@ MonoBehaviour:
   energy: 0
   shoot: 
   shootbutton: 0
+  shootpos: {x: 0, y: 0, z: 0}
   bgm_manager: {fileID: 0}
   animator: {fileID: 0}
   duration: 0
@@ -698,6 +699,12 @@ MonoBehaviour:
   - {fileID: 1668984019}
   - {fileID: 1497684276}
   - {fileID: 1311524823}
+  padpos:
+  - {fileID: 392807067}
+  - {fileID: 1034389824}
+  - {fileID: 1531292130}
+  - {fileID: 788170809}
+  - {fileID: 821955942}
   encouter_list: []
   bloodmax: 5
   energyball_max: 5
@@ -856,7 +863,7 @@ GameObject:
   - component: {fileID: 392807065}
   - component: {fileID: 392807064}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: shootpos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -919,7 +926,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 392807063}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.44, y: -4.17, z: 0}
+  m_LocalPosition: {x: -1.3931, y: -4.408, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 188397079}
@@ -1687,7 +1694,7 @@ GameObject:
   - component: {fileID: 788170811}
   - component: {fileID: 788170810}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: shootpos3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1700,7 +1707,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 788170808}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.33, y: -4.17, z: 0}
+  m_LocalPosition: {x: 1.33, y: -4.408, z: 0}
   m_LocalScale: {x: 0.099999994, y: 0.099999994, z: 0.099999994}
   m_Children: []
   m_Father: {fileID: 188397079}
@@ -4485,7 +4492,7 @@ GameObject:
   - component: {fileID: 821955944}
   - component: {fileID: 821955943}
   m_Layer: 0
-  m_Name: Cube (4)
+  m_Name: shootpos4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4498,7 +4505,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 821955941}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.22, y: -4.17, z: 0}
+  m_LocalPosition: {x: 2.22, y: -4.408, z: 0}
   m_LocalScale: {x: 0.099999994, y: 0.099999994, z: 0.099999994}
   m_Children: []
   m_Father: {fileID: 188397079}
@@ -4851,7 +4858,7 @@ GameObject:
   - component: {fileID: 1034389826}
   - component: {fileID: 1034389825}
   m_Layer: 0
-  m_Name: Cube (2)
+  m_Name: shootpos1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4864,7 +4871,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1034389823}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.48, y: -4.17, z: 0}
+  m_LocalPosition: {x: -0.48, y: -4.408, z: 0}
   m_LocalScale: {x: 0.099999994, y: 0.099999994, z: 0.099999994}
   m_Children: []
   m_Father: {fileID: 188397079}
@@ -5758,7 +5765,7 @@ GameObject:
   - component: {fileID: 1531292132}
   - component: {fileID: 1531292131}
   m_Layer: 0
-  m_Name: Cube (3)
+  m_Name: shootpos2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5771,7 +5778,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1531292129}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.43, y: -4.17, z: 0}
+  m_LocalPosition: {x: 0.43, y: -4.408, z: 0}
   m_LocalScale: {x: 0.099999994, y: 0.099999994, z: 0.099999994}
   m_Children: []
   m_Father: {fileID: 188397079}
