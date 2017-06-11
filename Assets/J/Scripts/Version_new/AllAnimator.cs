@@ -8,7 +8,7 @@ public class AllAnimator : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		m_Animator=GetComponent<Animator>();
-		m_GameMain=GameObject.Find("GameMain").GetComponent<GameMain>();
+		m_GameMain=GetComponent<GameMain>();
 	}
 	
 	// Update is called once per frame

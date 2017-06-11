@@ -697,12 +697,6 @@ MonoBehaviour:
     e_time: 1000
     encoutered: 0
     type: []
-  - Prefab: {fileID: 1039709725535584, guid: 43560977d20c24bd5b485e8cabbb7d77, type: 2}
-    PrefabName: 
-    pos: {x: 2.6, y: 6.6, z: 2}
-    e_time: 100
-    encoutered: 0
-    type: []
   enemy_list:
   - {fileID: 1288937694420572, guid: d8130969e265043b6abe7393f8250dac, type: 2}
   - {fileID: 1128060719293374, guid: 2e7e013f069fd48af88a050258a03373, type: 2}
@@ -810,7 +804,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69df5ef2d81a1b9469a9dfaabbbef22f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gamemain: {fileID: 0}
+  gamemain: {fileID: 188397083}
   LimitNumber: 8
   Radius: 2.1
 --- !u!1001 &285026629
@@ -1078,7 +1072,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 166640, guid: d31d9ab42a5c65445aec0bd43ef82eb6, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d31d9ab42a5c65445aec0bd43ef82eb6, type: 2}
@@ -1395,7 +1389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69df5ef2d81a1b9469a9dfaabbbef22f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gamemain: {fileID: 0}
+  gamemain: {fileID: 188397083}
   LimitNumber: 2
   Radius: 0.75
 --- !u!1001 &453842009
@@ -2113,8 +2107,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 188397083}
-        m_MethodName: InitGame
+      - m_Target: {fileID: 188397082}
+        m_MethodName: PlayGo
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3719,7 +3713,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69df5ef2d81a1b9469a9dfaabbbef22f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gamemain: {fileID: 0}
+  gamemain: {fileID: 188397083}
   LimitNumber: 6
   Radius: 1.65
 --- !u!1 &1675805736
@@ -3814,7 +3808,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69df5ef2d81a1b9469a9dfaabbbef22f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gamemain: {fileID: 0}
+  gamemain: {fileID: 188397083}
   LimitNumber: 4
   Radius: 1.2
 --- !u!1001 &1679181735
