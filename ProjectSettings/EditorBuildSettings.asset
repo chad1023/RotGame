@@ -5,7 +5,9 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Chad/Scene/tempMain.unity
   - enabled: 0
     path: Assets/Scene/GameMainV2.unity
+  - enabled: 1
+    path: Assets/Chad/Scene/Main_20170611.unity

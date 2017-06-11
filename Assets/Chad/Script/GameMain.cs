@@ -20,7 +20,7 @@ public class GameMain : MonoBehaviour {
 
 	[Header("state")]
 	public GameState state=GameState.Init;
-	public static int gamelevel;
+	public int gamelevel=0;
 	public bool IsInvincible = false;
 	public int totaldistance;
 	public int speed;
@@ -29,6 +29,7 @@ public class GameMain : MonoBehaviour {
 	public string shoot;
 	public int shootbutton;
 	public AudioSource bgm_manager;
+	public Animator animator;
 	[SerializeField]
 	private int duration;
 	public int energyball_num;
@@ -45,7 +46,7 @@ public class GameMain : MonoBehaviour {
 	 
 	[Header("enemy")]
 	public List<Item_Encountered>encouter_list;
-	public List<GameObject> enemy_list;
+//	public List<GameObject> enemy_list;
 
 
 
@@ -55,6 +56,7 @@ public class GameMain : MonoBehaviour {
 	public int energyball_max;
 	public int enemy_radius;
 	public List<GameObject> energyball;
+	public LevelManager levelmanager;
 
 	private List<GameObject> clones=new List<GameObject>();
 
@@ -69,32 +71,48 @@ public class GameMain : MonoBehaviour {
 
 		clickmanagement = GetComponent<Clickmanagement> ();
 		encouter_list.Sort ((x, y) => { return x.e_time.CompareTo(y.e_time); });
+		levelmanager = GetComponent<LevelManager> ();
 
 
 	}
 
-	public void InitGame(){
-		bgm_manager.Play ();
+	 public void InitGame(){
+		bgm_manager.Stop ();
+		LoadLevel ();
 
-		foreach (GameObject clone in clones) {
-			Destroy (clone);
-		}
-		clones.Clear ();
-
+		//init state value
 		blood = bloodmax;
 		duration = 0;
 		energy = 0;
 		energyball_num = 0;
+
+		//init UI
+		durationbar.value = duration;
+		energybar.fillAmount = energy;
 		foreach (Button pad in energypad)
 		{
 			foreach (GameObject child in pad.GetComponent<EnergyPad>().enegyball) {
 				child.SetActive (false);
 			}
 			pad.interactable = false;
-		
+
 		}
 
-		InvokeRepeating ("EnemyCreate", 0f, 5f);
+		//	InvokeRepeating ("EnemyCreate", 0f, 5f);
+	
+		start.SetActive (false);
+		animator.Play ("Go");
+	}
+
+	public void StartGame(){
+		bgm_manager.Play ();
+
+		state = GameState.Progress;
+		totaldistancetext.text = totaldistance.ToString()+"(AU)";
+
+
+
+	//	InvokeRepeating ("EnemyCreate", 0f, 5f);
 		state = GameState.Progress;
 		totaldistancetext.text = totaldistance.ToString()+"(AU)";
 
@@ -102,14 +120,16 @@ public class GameMain : MonoBehaviour {
 	}
 
 	public void LoadLevel(){
-
+		LevelData data = levelmanager.getdata (gamelevel);
+		
+		encouter_list = data.encouter_list;
 		//load totaldistance,encounter_list,enemy_list
 	}
     
     // Use this for initialization
     void Start () {
 		bgm_manager = GetComponent<AudioSource> ();
-
+		animator = GetComponent<Animator> ();
 
 
 
@@ -152,8 +172,10 @@ public class GameMain : MonoBehaviour {
     }
 
 	void Recovery(){
-		foreach (GameObject item in enemy_list) {
-			JObjectPool._InstanceJObjectPool.RecoveryCertainObj (item.name);
+		foreach (Item_Encountered item in encouter_list) {
+			foreach (GameObject enemy in item.type) {
+				JObjectPool._InstanceJObjectPool.RecoveryCertainObj (enemy.name);
+			}
 		}
 		foreach (GameObject item in energyball){
 			JObjectPool._InstanceJObjectPool.RecoveryCertainObj (item.name);
@@ -206,13 +228,19 @@ public class GameMain : MonoBehaviour {
 		shoot="";
 		CancelInvoke ();
 		Recovery ();
+
+
 	
 	}
 
 	void GameClear(){
 		GameFinish ();
 		gametext.text = "Clear!";
-	
+
+		gamelevel += 1;
+		if (gamelevel >= levelmanager.maxlevel) {
+			gamelevel -= 1;
+		}
 		start.SetActive (true);
 
 
@@ -270,9 +298,9 @@ public class GameMain : MonoBehaviour {
 
 			Vector2 project = (Random.insideUnitCircle).normalized*enemy_radius;
 			Vector3 pos = new Vector3 (project.x, project.y, 0);
-			GameObject enemy_clone = GetGameObject (enemy.Prefab, pos);
+			GameObject enemy_clone = GetGameObject (enemy.type[i], pos);
 			enemy_clone.GetComponent<FlyingObjControl> ().MoveSpeed = 5;
-			yield return new WaitForSeconds(2);
+			yield return new WaitForSeconds(5);
 			enemy.encoutered = false;
 		}
 	}
