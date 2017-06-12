@@ -8,6 +8,9 @@ public class RocketControl : MonoBehaviour {
     public float RocketShakeDuration;
     public float RocketShakeStrenth;
 
+
+
+
 	[Space]
 	private string exploname="ExploEffect";
 	private GameMain gamemain;
@@ -27,16 +30,15 @@ public class RocketControl : MonoBehaviour {
         FlyingObjControl _FlyingObjControl = other.GetComponent<FlyingObjControl>();
 		if ((_FlyingObjControl)&&(GameMain._gamemain.state==GameState.Progress)) { 
 //			print (other.transform.position);
-//			Vector3 impact = (transform.position-other.transform.position).normalized;
-//			print (transform.parent);
-//			Vector3 relative = transform.InverseTransformDirection(impact);
-//			transform.DOPunchPosition (10*impact, 0.3f);
+			Vector3 impact = (transform.position-other.transform.position).normalized;
+			print (transform.parent);
+			Vector3 relative = transform.parent.InverseTransformDirection(impact);
+			transform.parent.DOPunchPosition (0.1f*impact, 0.5f);
 
 			_FlyingObjControl.DestoryByHit();
 			JObjectPool._InstanceJObjectPool.Recovery(_FlyingObjControl.gameObject);
 			GameMain._gamemain.BloodDecrease ();
 			exploaudio.Play ();
-
 
 		}
     }

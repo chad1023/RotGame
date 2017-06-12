@@ -55,7 +55,8 @@ public class GameMain : MonoBehaviour {
 	public List<planet>planet_list;
 	public List<GameObject> tem_list;
 
-
+	[Header("particle for hit")]
+	public GameObject[]smoke;
 
 	[Header("unchanged")]
 	public int bloodmax;
@@ -86,8 +87,10 @@ public class GameMain : MonoBehaviour {
 	}
 
 	 public void InitGame(){
-		
-
+		animator.enabled = true;
+		foreach (GameObject p in smoke) {
+			p.SetActive (false);
+		}
 		bgm_manager.Stop ();
 		foreach (GameObject item in tem_list) {
 			Destroy (item);
@@ -124,7 +127,7 @@ public class GameMain : MonoBehaviour {
 
 		state = GameState.Progress;
 		totaldistancetext.text = totaldistance.ToString()+"(AU)";
-
+		animator.enabled = false;
 
 
 	//	InvokeRepeating ("EnemyCreate", 0f, 5f);
@@ -229,6 +232,7 @@ public class GameMain : MonoBehaviour {
 	void UpdateGame(){
 		if (duration == totaldistance) {
 			GameFinish ();
+			animator.enabled = true;
 			animator.Play ("Through");
 		}
 		if (blood == 0) {
@@ -281,7 +285,7 @@ public class GameMain : MonoBehaviour {
 		shoot="";
 		shootbutton = 0;
 
-		CancelInvoke ();
+	
 
 	}
 
@@ -298,6 +302,7 @@ public class GameMain : MonoBehaviour {
 
 	}
 	void GameOver(){
+		
 		gametext.text = "Game Over";
 		Recovery ();
 		start.SetActive (true);
@@ -336,7 +341,11 @@ public class GameMain : MonoBehaviour {
 
 	public void BloodDecrease(){
 		blood--;
-	
+		if (GameMain._gamemain.blood == 3) {
+			smoke [0].SetActive (true);
+		} else if (GameMain._gamemain.blood == 1) {
+			smoke [1].SetActive (true);
+		}
 	}
 	public void BloodIncrease(){
 		blood++;

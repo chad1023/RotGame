@@ -36,11 +36,11 @@ public class CircleParmeter : MonoBehaviour
             GameObject InsLight = JObjectPool._InstanceJObjectPool.GetGameObject(gamemain.shoot, transform.position);
             InsLight.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
             InsLight.transform.SetParent(this.transform);
-            Collider col = InsLight.GetComponent<Collider>();
-            col.enabled = false;
+//            Collider col = InsLight.GetComponent<Collider>();
+//            col.enabled = false;
             Tweener tweener = InsLight.transform.DOMove(modifyvecter, 1f);
             tweener.SetEase(Ease.OutQuad);
-            tweener.OnComplete(() => { col.enabled = true; });
+//            tweener.OnComplete(() => { col.enabled = true; });
             gamemain.EnergyShoot();
 
             LimitNumber--;
