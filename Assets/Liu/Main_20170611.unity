@@ -677,7 +677,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  gamelevel: 1
+  gamelevel: 0
   IsInvincible: 0
   totaldistance: 6000
   speed: 100
@@ -791,8 +791,8 @@ MonoBehaviour:
       pos: {x: -3, y: 5.8, z: 2}
       e_time: 5500
       encoutered: 0
-    planet_go: {fileID: 21300000, guid: 182beae68f4c743ada783ff0ab4d880e, type: 3}
-    planet_arrive: {fileID: 21300000, guid: a3f03b4ec039a464aa5387f00b3da467, type: 3}
+    planet_go: {fileID: 21300000, guid: f559dcc7ba72144e38803ad42817652e, type: 3}
+    planet_arrive: {fileID: 21300000, guid: 5ab1e3316c1e62c4b87652f01bd1bc07, type: 3}
     totaldistance: 6000
   - enemy_list:
     - PrefabName: rock
@@ -823,8 +823,8 @@ MonoBehaviour:
       pos: {x: 1.5, y: 5.8, z: 2}
       e_time: 4500
       encoutered: 0
-    planet_go: {fileID: 21300000, guid: a3f03b4ec039a464aa5387f00b3da467, type: 3}
-    planet_arrive: {fileID: 21300000, guid: 182beae68f4c743ada783ff0ab4d880e, type: 3}
+    planet_go: {fileID: 21300000, guid: 5ab1e3316c1e62c4b87652f01bd1bc07, type: 3}
+    planet_arrive: {fileID: 21300000, guid: 519e7767f8ec7054c8ecce92e26dbb7b, type: 3}
     totaldistance: 6000
   - enemy_list: []
     planet_list: []
@@ -1211,7 +1211,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 493417059}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -9, z: 0}
+  m_LocalPosition: {x: 0, y: -9.042, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 188397079}
