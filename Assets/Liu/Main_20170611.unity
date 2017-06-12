@@ -677,7 +677,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  gamelevel: 0
+  gamelevel: 1
   IsInvincible: 0
   totaldistance: 6000
   speed: 100
@@ -751,13 +751,45 @@ MonoBehaviour:
       - {fileID: 1284113715694686, guid: b0d825eeeff914707bc15ef83e6c2e78, type: 2}
       - {fileID: 1128060719293374, guid: 2e7e013f069fd48af88a050258a03373, type: 2}
     planet_list:
-    - prefab: {fileID: 1099832164579954, guid: 87c1d6327570149379aafeca097fd80b, type: 2}
-      pos: {x: 0, y: 5.8, z: 2}
-      e_time: 2600
+    - prefab: {fileID: 1099832164579954, guid: 4c802793b3060e64186f6e07aa718d2f, type: 2}
+      pos: {x: 2, y: 5.8, z: 2}
+      e_time: 100
       encoutered: 0
-    - prefab: {fileID: 1662575918252068, guid: e10a6cf6adc874116a9436ba8532985f, type: 2}
-      pos: {x: 2.3, y: 5.8, z: 2}
-      e_time: 200
+    - prefab: {fileID: 1099832164579954, guid: 978418f6e2293554ea714ae94087003a, type: 2}
+      pos: {x: 1, y: 5.8, z: 2}
+      e_time: 500
+      encoutered: 0
+    - prefab: {fileID: 1099832164579954, guid: 1f77c06383c152f4fb4d288170759c1d, type: 2}
+      pos: {x: -2, y: 5.8, z: 2}
+      e_time: 900
+      encoutered: 0
+    - prefab: {fileID: 1099832164579954, guid: caef2cceeb2517f4cb5468906716c4fd, type: 2}
+      pos: {x: -1.9, y: 5.8, z: 2}
+      e_time: 1500
+      encoutered: 0
+    - prefab: {fileID: 1099832164579954, guid: 8ca790bbea267d14e901ccdfd511fc89, type: 2}
+      pos: {x: 1.9, y: 5.8, z: 2}
+      e_time: 2100
+      encoutered: 0
+    - prefab: {fileID: 1099832164579954, guid: 88117a8526f76a0439b6c86fe3ad4d3c, type: 2}
+      pos: {x: -2.5, y: 5.8, z: 2}
+      e_time: 2800
+      encoutered: 0
+    - prefab: {fileID: 1099832164579954, guid: 6a3d381781770b14da813f0843950418, type: 2}
+      pos: {x: 2, y: 5.8, z: 2}
+      e_time: 3500
+      encoutered: 0
+    - prefab: {fileID: 1099832164579954, guid: 5f6cfbd8891b56b49865eb95bcc7bc77, type: 2}
+      pos: {x: 3, y: 5.8, z: 2}
+      e_time: 4200
+      encoutered: 0
+    - prefab: {fileID: 1099832164579954, guid: f9ab8e687b239fb49a7b79c8f52812e6, type: 2}
+      pos: {x: 1.5, y: 5.8, z: 2}
+      e_time: 5100
+      encoutered: 0
+    - prefab: {fileID: 1099832164579954, guid: fe68fad0c0a5a8b41a4c92bbe2034f78, type: 2}
+      pos: {x: -3, y: 5.8, z: 2}
+      e_time: 5500
       encoutered: 0
     planet_go: {fileID: 21300000, guid: 182beae68f4c743ada783ff0ab4d880e, type: 3}
     planet_arrive: {fileID: 21300000, guid: a3f03b4ec039a464aa5387f00b3da467, type: 3}
@@ -771,9 +803,25 @@ MonoBehaviour:
       type:
       - {fileID: 1128060719293374, guid: 2e7e013f069fd48af88a050258a03373, type: 2}
     planet_list:
-    - prefab: {fileID: 1099832164579954, guid: 87c1d6327570149379aafeca097fd80b, type: 2}
-      pos: {x: 0, y: 5.8, z: 2}
-      e_time: 0
+    - prefab: {fileID: 1099832164579954, guid: 31fe67291c5f03f42af0c746b42bcf90, type: 2}
+      pos: {x: 2, y: 5.8, z: 2}
+      e_time: 300
+      encoutered: 0
+    - prefab: {fileID: 1099832164579954, guid: 1f974124f773f5141bd8c74e7ec8f2bf, type: 2}
+      pos: {x: -2, y: 5.8, z: 2}
+      e_time: 1300
+      encoutered: 0
+    - prefab: {fileID: 1099832164579954, guid: 9857e9b38938c7849a0d4174e34a681f, type: 2}
+      pos: {x: 3, y: 5.8, z: 2}
+      e_time: 2200
+      encoutered: 0
+    - prefab: {fileID: 1099832164579954, guid: d2f4a0b34d5465341a255b207416d0bc, type: 2}
+      pos: {x: -1, y: 5.8, z: 2}
+      e_time: 3600
+      encoutered: 0
+    - prefab: {fileID: 1099832164579954, guid: 84ff912359ea79a49a0a5928ab734175, type: 2}
+      pos: {x: 1.5, y: 5.8, z: 2}
+      e_time: 4500
       encoutered: 0
     planet_go: {fileID: 21300000, guid: a3f03b4ec039a464aa5387f00b3da467, type: 3}
     planet_arrive: {fileID: 21300000, guid: 182beae68f4c743ada783ff0ab4d880e, type: 3}
@@ -1904,7 +1952,7 @@ ParticleSystemRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_SelectedEditorRenderState: 1
+  m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -1983,7 +2031,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1530654109
+  randomSeed: -691746133
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4805,7 +4853,7 @@ Prefab:
     - target: {fileID: 224598440902164002, guid: aa57f2a32ba5845ed8018e5e9ec4a9f2,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 60.4
+      value: 34
       objectReference: {fileID: 0}
     - target: {fileID: 224598440902164002, guid: aa57f2a32ba5845ed8018e5e9ec4a9f2,
         type: 2}
@@ -5394,7 +5442,7 @@ Prefab:
     - target: {fileID: 224598440902164002, guid: aa57f2a32ba5845ed8018e5e9ec4a9f2,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 60.399902
+      value: 34
       objectReference: {fileID: 0}
     - target: {fileID: 224598440902164002, guid: aa57f2a32ba5845ed8018e5e9ec4a9f2,
         type: 2}
@@ -6267,7 +6315,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1608237287}
   m_LocalRotation: {x: 0, y: 0, z: 0.34947154, w: 0.936947}
-  m_LocalPosition: {x: 0, y: 9, z: 0}
+  m_LocalPosition: {x: 0, y: 8.8, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 188397079}

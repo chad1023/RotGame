@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212593595724629098}
   - component: {fileID: 114767220538530768}
   m_Layer: 0
-  m_Name: Earth
+  m_Name: Planet_1_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36,7 +36,7 @@ Transform:
   m_GameObject: {fileID: 1099832164579954}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 5.8, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 9.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f32eb2cb8ef8475397cfc920eb743c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.01
+  speed: 0.02
 --- !u!212 &212593595724629098
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -84,7 +84,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: -10
-  m_Sprite: {fileID: 21300000, guid: 182beae68f4c743ada783ff0ab4d880e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1af833a1d0aa35b4fbbe2d7b5d071f58, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
