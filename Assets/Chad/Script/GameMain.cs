@@ -193,7 +193,7 @@ public class GameMain : MonoBehaviour {
 		if (state == GameState.Progress) {
 			duration = Mathf.Clamp (duration + (int)(speed * Time.deltaTime), 0, totaldistance);
 			if (energyball_num < energyball_max)
-				energy = Mathf.Clamp (energy + 0.5f * Time.deltaTime, 0.0f, 1.0f);
+				energy = Mathf.Clamp (energy + 0.4f * Time.deltaTime, 0.0f, 1.0f);
 
 			UpdateUI ();
 			UpdateGame ();

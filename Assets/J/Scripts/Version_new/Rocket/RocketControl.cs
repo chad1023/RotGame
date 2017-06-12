@@ -26,10 +26,17 @@ public class RocketControl : MonoBehaviour {
     {
         FlyingObjControl _FlyingObjControl = other.GetComponent<FlyingObjControl>();
 		if ((_FlyingObjControl)&&(GameMain._gamemain.state==GameState.Progress)) { 
+//			print (other.transform.position);
+//			Vector3 impact = (transform.position-other.transform.position).normalized;
+//			print (transform.parent);
+//			Vector3 relative = transform.InverseTransformDirection(impact);
+//			transform.DOPunchPosition (10*impact, 0.3f);
+
 			_FlyingObjControl.DestoryByHit();
 			JObjectPool._InstanceJObjectPool.Recovery(_FlyingObjControl.gameObject);
 			GameMain._gamemain.BloodDecrease ();
 			exploaudio.Play ();
+
 
 		}
     }

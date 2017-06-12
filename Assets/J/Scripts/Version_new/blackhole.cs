@@ -5,11 +5,19 @@ using DG.Tweening;
 
 public class blackhole : MonoBehaviour {
     Transform AllSceneObj;
-	// Use this for initialization
+//	Rigidbody rigidbody;
+//	public float speed;
+//	Tweener tweener;
+//	Tweener tweener_drop;
+//	// Use this for initialization
 	void Start () {
         AllSceneObj = GameObject.Find("ALL Scene obj").transform;
-//		Tweener tweener = transform.DORotate (new Vector3 (0, 0, 360), 5f);
-//		tweener.SetUpdate (true);
+//		rigidbody = GetComponent<Rigidbody> ();
+
+//		tweener = transform.DORotate (new Vector3 (0, 0, 360), 1f,RotateMode.LocalAxisAdd);
+//
+////		Tweener tweener = rigidbody.DORotate (new Vector3 (0, 0, 360), 1f,RotateMode.FastBeyond360);
+//		tweener.SetLoops (-1);
 //		tweener.SetEase(Ease.Linear);
 	}
 	
