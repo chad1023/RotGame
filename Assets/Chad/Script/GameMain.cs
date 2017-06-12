@@ -371,7 +371,7 @@ public class GameMain : MonoBehaviour {
 				float t = Random.Range (0, 1f);
 				Vector3 pos = new Vector3 (Random.Range(-1.5f,1.5f), 6, 0);
 				GameObject enemy_clone = GetGameObject (enemy.type [0], pos);
-
+				enemy_clone.GetComponent<SpotFly> ().speed = 0.01f;
 				yield return new WaitForSeconds (enemy.period - t);
 				enemy.encoutered = false;
 					
