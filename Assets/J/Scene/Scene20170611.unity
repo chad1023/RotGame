@@ -495,6 +495,48 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 159973602}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &164393878
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4462229360596932, guid: a9f123de78e574e45bcbdc52885af718, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -0.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 4462229360596932, guid: a9f123de78e574e45bcbdc52885af718, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 4.0666685
+      objectReference: {fileID: 0}
+    - target: {fileID: 4462229360596932, guid: a9f123de78e574e45bcbdc52885af718, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4462229360596932, guid: a9f123de78e574e45bcbdc52885af718, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4462229360596932, guid: a9f123de78e574e45bcbdc52885af718, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4462229360596932, guid: a9f123de78e574e45bcbdc52885af718, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4462229360596932, guid: a9f123de78e574e45bcbdc52885af718, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4462229360596932, guid: a9f123de78e574e45bcbdc52885af718, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a9f123de78e574e45bcbdc52885af718, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &188397078
 GameObject:
   m_ObjectHideFlags: 0
@@ -684,7 +726,6 @@ MonoBehaviour:
   energy: 0
   shoot: 
   shootbutton: 0
-  shootpos: {x: 0, y: 0, z: 0}
   bgm_manager: {fileID: 0}
   animator: {fileID: 0}
   duration: 0
@@ -701,13 +742,13 @@ MonoBehaviour:
   - {fileID: 1668984019}
   - {fileID: 1497684276}
   - {fileID: 1311524823}
-  padpos:
-  - {fileID: 392807067}
-  - {fileID: 1034389824}
-  - {fileID: 1531292130}
-  - {fileID: 788170809}
-  - {fileID: 821955942}
-  encouter_list: []
+  marker: {fileID: 0}
+  canvas: {fileID: 0}
+  planet_go: {fileID: 0}
+  planet_arrive: {fileID: 0}
+  enemy_list: []
+  planet_list: []
+  tem_list: []
   bloodmax: 5
   energyball_max: 5
   enemy_radius: 6
@@ -718,6 +759,8 @@ MonoBehaviour:
   - {fileID: 1713466060298954, guid: 090a0e4dfa82b458d9395e5dcd3999e9, type: 2}
   - {fileID: 1930397124251884, guid: 4a315b9efa6404e2dabf79210f36d6ce, type: 2}
   levelmanager: {fileID: 0}
+  markerstart: {fileID: 0}
+  markerend: {fileID: 0}
 --- !u!114 &188397084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -731,22 +774,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxlevel: 3
   Leveldata_list:
-  - encouter_list:
-    - PrefabName: Rock
-      pos: {x: 0, y: 0, z: 0}
-      e_time: 0
-      encoutered: 0
-      type:
-      - {fileID: 1288937694420572, guid: d8130969e265043b6abe7393f8250dac, type: 2}
-      - {fileID: 1128060719293374, guid: 2e7e013f069fd48af88a050258a03373, type: 2}
-      - {fileID: 1284113715694686, guid: b0d825eeeff914707bc15ef83e6c2e78, type: 2}
-      - {fileID: 1619848812935998, guid: ddfec5c3a35594f7592259326191e1d4, type: 2}
-      - {fileID: 1977498903923162, guid: 4566d910f63014996ba4d9ea43b1b83c, type: 2}
-    background: {fileID: 0}
-  - encouter_list: []
-    background: {fileID: 0}
-  - encouter_list: []
-    background: {fileID: 0}
+  - enemy_list: []
+    planet_list: []
+    planet_go: {fileID: 0}
+    planet_arrive: {fileID: 0}
+    totaldistance: 3000
+  - enemy_list: []
+    planet_list: []
+    planet_go: {fileID: 0}
+    planet_arrive: {fileID: 0}
+    totaldistance: 3000
+  - enemy_list: []
+    planet_list: []
+    planet_go: {fileID: 0}
+    planet_arrive: {fileID: 0}
+    totaldistance: 3000
 --- !u!1 &203152053
 GameObject:
   m_ObjectHideFlags: 0
@@ -1236,7 +1278,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &625079819
 RectTransform:
   m_ObjectHideFlags: 0

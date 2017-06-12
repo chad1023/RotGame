@@ -8,15 +8,22 @@ public class blackhole : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         AllSceneObj = GameObject.Find("ALL Scene obj").transform;
+//		Tweener tweener = transform.DORotate (new Vector3 (0, 0, 360), 5f);
+//		tweener.SetUpdate (true);
+//		tweener.SetEase(Ease.Linear);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
+		
 	}
-    private void OnTriggerEnter(Collider other)
+
+
+    void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<LightBallControl>())
+		print (other.gameObject.name);
+		if (other.GetComponent<LightBallControl>())
         {
             other.transform.SetParent(AllSceneObj);
             other.transform.GetComponent<Collider>().enabled = false;
