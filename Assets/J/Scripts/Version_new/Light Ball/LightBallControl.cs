@@ -77,5 +77,6 @@ public class LightBallControl : MonoBehaviour {
     {
         lasttime = 0;
         _CircleParmeter=null;
+        s=0.8f;
     }
 }
