@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 198175899412769312}
   - component: {fileID: 199927709127518376}
   m_Layer: 0
-  m_Name: SubEmitter0
+  m_Name: ClickEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -121,6 +121,7 @@ public class GameMain : MonoBehaviour {
 		start.SetActive (false);
 		animator.Play ("Go");
 	}
+		
 
 	public void StartGame(){
 		bgm_manager.Play ();
@@ -376,8 +377,18 @@ public class GameMain : MonoBehaviour {
 		return JObjectPool._InstanceJObjectPool.GetGameObject (prefab.name,pos);
 	}
 
+	//for tutorial
+	public void RunTutorial(){
+		start.SetActive (false);
+		animator.enabled = true;
 
+	}
 
+	//for tutorial end
+	public void BackMenu()
+	{
+		start.SetActive(true);
+	}
 
 
 
