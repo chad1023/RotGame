@@ -37,7 +37,7 @@ public class blackhole : MonoBehaviour {
             other.transform.SetParent(AllSceneObj);
             other.transform.GetComponent<Collider>().enabled = false;
             other.transform.DOMove(transform.position, 1.5f);
-            JObjectPool._InstanceJObjectPool.Recovery(other.gameObject);
+            JObjectPool._InstanceJObjectPool.DelayRecovery(other.gameObject,1.5f);
         }
     }
 }
