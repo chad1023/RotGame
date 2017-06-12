@@ -677,7 +677,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  gamelevel: 0
+  gamelevel: 2
   IsInvincible: 0
   totaldistance: 6000
   speed: 100
@@ -826,11 +826,52 @@ MonoBehaviour:
     planet_go: {fileID: 21300000, guid: 5ab1e3316c1e62c4b87652f01bd1bc07, type: 3}
     planet_arrive: {fileID: 21300000, guid: 519e7767f8ec7054c8ecce92e26dbb7b, type: 3}
     totaldistance: 6000
-  - enemy_list: []
-    planet_list: []
-    planet_go: {fileID: 0}
-    planet_arrive: {fileID: 0}
-    totaldistance: 0
+  - enemy_list:
+    - PrefabName: rock
+      pos: {x: 0, y: 0, z: 0}
+      e_time: 0
+      period: 5
+      encoutered: 0
+      type:
+      - {fileID: 1284113715694686, guid: b0d825eeeff914707bc15ef83e6c2e78, type: 2}
+      - {fileID: 1128060719293374, guid: 2e7e013f069fd48af88a050258a03373, type: 2}
+      - {fileID: 1977498903923162, guid: 4566d910f63014996ba4d9ea43b1b83c, type: 2}
+    planet_list:
+    - prefab: {fileID: 1099832164579954, guid: b3a2d1262f8c7834196f00ddb0af975a, type: 2}
+      pos: {x: 1.5, y: 5, z: 2}
+      e_time: 800
+      encoutered: 0
+    - prefab: {fileID: 1099832164579954, guid: 1689a9a0e39d4e742b9cbb8ca93335a5, type: 2}
+      pos: {x: 0.5, y: 5, z: 2}
+      e_time: 1600
+      encoutered: 0
+    - prefab: {fileID: 1099832164579954, guid: 9a3771121b75af84b88a1abdfcb8126c, type: 2}
+      pos: {x: -1.5, y: 5, z: 2}
+      e_time: 2500
+      encoutered: 0
+    - prefab: {fileID: 1099832164579954, guid: c4760a70bdd12014e968cec100cb2634, type: 2}
+      pos: {x: 2, y: 5, z: 2}
+      e_time: 3300
+      encoutered: 0
+    - prefab: {fileID: 1099832164579954, guid: 23ae0495fcb34f144bbd3fb18b7011b3, type: 2}
+      pos: {x: -1, y: 5, z: 2}
+      e_time: 4100
+      encoutered: 0
+    - prefab: {fileID: 1099832164579954, guid: 7c8ba77e69eb3504bb90207fd7d142a7, type: 2}
+      pos: {x: -1.5, y: 5, z: 2}
+      e_time: 4900
+      encoutered: 0
+    - prefab: {fileID: 1099832164579954, guid: ec8e5273a15f71b438424de73536455d, type: 2}
+      pos: {x: -1.5, y: 5, z: 2}
+      e_time: 5300
+      encoutered: 0
+    - prefab: {fileID: 1099832164579954, guid: a199250415d9b8049bc10a83d96feec1, type: 2}
+      pos: {x: -0.5, y: 5, z: 2}
+      e_time: 5700
+      encoutered: 0
+    planet_go: {fileID: 21300000, guid: 519e7767f8ec7054c8ecce92e26dbb7b, type: 3}
+    planet_arrive: {fileID: 21300000, guid: acc4157512f37414d88fe17f7283852f, type: 3}
+    totaldistance: 6000
 --- !u!114 &188397085
 MonoBehaviour:
   m_ObjectHideFlags: 0
