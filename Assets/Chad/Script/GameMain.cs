@@ -355,14 +355,27 @@ public class GameMain : MonoBehaviour {
 	IEnumerator EnemyCreate(Item_Encountered enemy){
 		if (!IsInvincible) {
 			Random.seed = System.Guid.NewGuid ().GetHashCode ();
-			int i = Random.Range (0, enemy.type.Count);
-			float t = Random.Range (0, 1f);
-			Vector2 project = (Random.insideUnitCircle).normalized*enemy_radius;
-			Vector3 pos = new Vector3 (project.x, project.y, 0);
-			GameObject enemy_clone = GetGameObject (enemy.type[i], pos);
-			enemy_clone.GetComponent<FlyingObjControl> ().MoveSpeed = 5;
-			yield return new WaitForSeconds(enemy.period-t);
-			enemy.encoutered = false;
+			if (enemy.PrefabName == "rock") {
+				int i = Random.Range (0, enemy.type.Count);
+				float t = Random.Range (0, 1f);
+				float rate = Random.Range (0, 1f);
+				Vector2 project = (Random.insideUnitCircle).normalized * enemy_radius;
+				Vector3 pos = new Vector3 (project.x, project.y, 0);
+				GameObject enemy_clone = GetGameObject (enemy.type [i], pos);
+				enemy_clone.GetComponent<FlyingObjControl> ().MoveSpeed = 5*(1+rate);
+				yield return new WaitForSeconds (enemy.period-t);
+				enemy.encoutered = false;
+			} 
+			else if (enemy.PrefabName == "blackhole") 
+			{
+				float t = Random.Range (0, 1f);
+				Vector3 pos = new Vector3 (Random.Range(-1.5f,1.5f), 6, 0);
+				GameObject enemy_clone = GetGameObject (enemy.type [0], pos);
+
+				yield return new WaitForSeconds (enemy.period - t);
+				enemy.encoutered = false;
+					
+			}
 		}
 	}
 	void SetClickItem(string s,int button_i){
