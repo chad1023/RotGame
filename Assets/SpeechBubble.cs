@@ -2,18 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpotFly : MonoBehaviour {
-	public float speed;
+public class SpeechBubble : MonoBehaviour {
+
 	// Use this for initialization
 	void Start () {
 		
+		Time.timeScale = 0;
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-//		transform.Translate(0,-speed,0);
-	}
-	void FixedUpdate(){
-		transform.Translate(0,-speed,0);
+		if (Input.GetMouseButtonDown (0)) {
+			
+			Time.timeScale = 1;
+			Destroy (gameObject);
+		}
+		
 	}
 }
