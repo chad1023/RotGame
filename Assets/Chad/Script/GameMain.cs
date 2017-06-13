@@ -142,13 +142,24 @@ public class GameMain : MonoBehaviour {
 	public void LoadLevel(){
 		LevelData data = levelmanager.getdata (gamelevel);
 		
-		enemy_list = data.enemy_list;
+		enemy_list.Clear ();
+		enemy_list = new List<Item_Encountered> (data.enemy_list);
+		foreach (Item_Encountered item in enemy_list) {
+			item.encoutered = false;
+		}
 		enemy_list.Sort ((x, y) => { return x.e_time.CompareTo(y.e_time); });
+
+		planet_list.Clear ();
 		planet_go.sprite = data.planet_go;
 		planet_arrive.sprite = data.planet_arrive;
 
 
-		planet_list = data.planet_list;
+		planet_list = new List<planet> (data.planet_list);
+
+		foreach (planet item in planet_list) {
+			item.encoutered = false;
+		}
+
 		planet_list.Sort ((x, y) => { return x.e_time.CompareTo(y.e_time); });
 
 
@@ -306,7 +317,7 @@ public class GameMain : MonoBehaviour {
 
 	}
 	void GameOver(){
-		
+		GameFinish ();
 		gametext.text = "Game Over";
 		Recovery ();
 		start.SetActive (true);
