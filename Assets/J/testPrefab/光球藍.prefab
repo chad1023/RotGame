@@ -114,7 +114,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 55745bb42e91a4eab9b2a269a1e71779, type: 3}
+  m_audioClip: {fileID: 8300000, guid: b77e320c7bec5c2418e23369ac12a9bd, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -218,8 +218,10 @@ MonoBehaviour:
   s: 0.8
   _CircleParmeter: {fileID: 0}
   sound:
-  - {fileID: 8300000, guid: 55745bb42e91a4eab9b2a269a1e71779, type: 3}
+  - {fileID: 8300000, guid: b77e320c7bec5c2418e23369ac12a9bd, type: 3}
   - {fileID: 8300000, guid: d68737d35d70045d98af6a89062ec821, type: 3}
+  Explo: {fileID: 1139359270278208, guid: 654872f7d79824b9e88239dae071a598, type: 2}
+  particle: {fileID: 0}
 --- !u!136 &136389141689282502
 CapsuleCollider:
   m_ObjectHideFlags: 1

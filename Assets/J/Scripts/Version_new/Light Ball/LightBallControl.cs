@@ -14,6 +14,7 @@ public class LightBallControl : MonoBehaviour {
 	public AudioClip[] sound=new AudioClip[2];
 
     public GameObject Explo;
+	public GameObject particle;
     float lasttime;
 	// Use this for initialization
 	void Start () {
@@ -70,7 +71,9 @@ public class LightBallControl : MonoBehaviour {
 			audio.Play ();
             _CircleParmeter.LimitNumber++;
             Init();
+			JObjectPool._InstanceJObjectPool.GetGameObject (Explo.name, transform.position);
             JObjectPool._InstanceJObjectPool.Recovery(this.gameObject,Vector3.zero);
+
         }
     }
     public void Init()
