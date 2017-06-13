@@ -207,7 +207,8 @@ public class GameMain : MonoBehaviour {
 		}
 	
 		if (Input.GetKeyDown (KeyCode.A)) {
-			blood = 0;
+			SpeedUp ();
+			Invoke ("SpeedDown", 5f);
 		}
 
     }
@@ -254,6 +255,7 @@ public class GameMain : MonoBehaviour {
 					print ("Encouter planet: " + item.prefab.name);
 					//call invoke
 					GameObject tem = (GameObject)Instantiate(item.prefab,item.pos,Quaternion.identity);
+					tem.GetComponent<SpotFly>().speed=0.0001f * speed;
 					item.encoutered = true;
 					tem_list.Add (tem);
 				}
@@ -401,6 +403,34 @@ public class GameMain : MonoBehaviour {
 	public void BackMenu()
 	{
 		start.SetActive(true);
+	}
+
+	public void SpeedUp(){
+		IsInvincible = true;
+		speed = 200;
+		foreach (GameObject g in tem_list) {
+			SpotFly _spotfly=g.GetComponent<SpotFly> ();
+			if (_spotfly != null) {
+				_spotfly.speed = 0.0001f * speed;
+			}
+		}
+	
+		GameObject[] enemy = GameObject.FindGameObjectsWithTag ("enemy");
+		foreach (GameObject item in enemy) {
+			JObjectPool._InstanceJObjectPool.RecoveryCertainObj (item.name);
+		}
+	}
+	public void SpeedDown(){
+		IsInvincible = false;
+		speed = 100;
+		foreach (GameObject g in tem_list) {
+			SpotFly _spotfly=g.GetComponent<SpotFly> ();
+			if (_spotfly != null) {
+				_spotfly.speed = 0.0001f * speed;
+			}
+		}
+	
+	
 	}
 
 
