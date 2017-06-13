@@ -99,7 +99,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 35249108}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: RocketEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -490,6 +490,10 @@ Prefab:
       propertyPath: moveWithTransform
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1559567248973440, guid: d7505dda478164741b31284e066c313c, type: 2}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d7505dda478164741b31284e066c313c, type: 2}
   m_IsPrefabParent: 0
@@ -787,7 +791,7 @@ Transform:
   - {fileID: 1866910408}
   - {fileID: 1293339442}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &188397080
 Animator:
@@ -815,7 +819,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 24c8ae03a3663481ab46bfa777a68c2f, type: 3}
+  m_audioClip: {fileID: 8300000, guid: f00f9037a89a8471aafc1ddbf225c935, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -1135,6 +1139,48 @@ Transform:
   m_PrefabParentObject: {fileID: 4527769590475958, guid: d7505dda478164741b31284e066c313c,
     type: 2}
   m_PrefabInternal: {fileID: 134882328}
+--- !u!1001 &197995703
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4876882540035082, guid: a9f123de78e574e45bcbdc52885af718, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 1.56
+      objectReference: {fileID: 0}
+    - target: {fileID: 4876882540035082, guid: a9f123de78e574e45bcbdc52885af718, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 2.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 4876882540035082, guid: a9f123de78e574e45bcbdc52885af718, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4876882540035082, guid: a9f123de78e574e45bcbdc52885af718, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4876882540035082, guid: a9f123de78e574e45bcbdc52885af718, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4876882540035082, guid: a9f123de78e574e45bcbdc52885af718, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4876882540035082, guid: a9f123de78e574e45bcbdc52885af718, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4876882540035082, guid: a9f123de78e574e45bcbdc52885af718, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a9f123de78e574e45bcbdc52885af718, type: 2}
+  m_IsPrefabParent: 0
 --- !u!4 &199336765 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4527769590475958, guid: d7505dda478164741b31284e066c313c,
@@ -1988,7 +2034,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &700217449
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2116,6 +2162,10 @@ Prefab:
       propertyPath: smoke.Array.data[1]
       value: 
       objectReference: {fileID: 199336767}
+    - target: {fileID: 1909224162981960, guid: 26197ba83673c4fce8803aab13295519, type: 2}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 26197ba83673c4fce8803aab13295519, type: 2}
   m_IsPrefabParent: 0
@@ -2498,7 +2548,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1409902662
+  randomSeed: 1066721415
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -6548,7 +6598,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1512156521}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: RocketObj
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7655,6 +7705,10 @@ Prefab:
       propertyPath: moveWithTransform
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1559567248973440, guid: d7505dda478164741b31284e066c313c, type: 2}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d7505dda478164741b31284e066c313c, type: 2}
   m_IsPrefabParent: 0
@@ -8378,7 +8432,7 @@ GameObject:
   - component: {fileID: 2007995019}
   - component: {fileID: 2007995021}
   - component: {fileID: 2007995020}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: FIre
   m_TagString: Untagged
   m_Icon: {fileID: 0}

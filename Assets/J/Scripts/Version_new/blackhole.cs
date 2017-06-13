@@ -15,7 +15,7 @@ public class blackhole : MonoBehaviour {
         AllSceneObj = GameObject.Find("ALL Scene obj").transform;
 //		rigidbody = GetComponent<Rigidbody> ();
 
-		Tweener tweener = image.DORotate (new Vector3 (0, 0, 360), 1f,RotateMode.LocalAxisAdd);
+		Tweener tweener = image.DORotate (new Vector3 (0, 0, -360), 1f,RotateMode.LocalAxisAdd);
 //
 ////		Tweener tweener = rigidbody.DORotate (new Vector3 (0, 0, 360), 1f,RotateMode.FastBeyond360);
 		tweener.SetLoops (-1);
@@ -38,6 +38,9 @@ public class blackhole : MonoBehaviour {
             other.transform.GetComponent<Collider>().enabled = false;
             other.transform.DOMove(transform.position, 0.5f);
             JObjectPool._InstanceJObjectPool.DelayRecovery(other.gameObject,0.5f);
+
         }
+
+
     }
 }
