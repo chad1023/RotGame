@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public enum GameState
 {
@@ -432,7 +433,12 @@ public class GameMain : MonoBehaviour {
 	
 	
 	}
-
+	public void LoadGameScene(){
+		SceneManager.LoadScene ("GameScene");
+	}
+	public void LoadTutorialScene(){
+		SceneManager.LoadScene ("Tutorial");
+	}
 
 
 
