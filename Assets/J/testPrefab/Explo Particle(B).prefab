@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4465917900147104}
   - component: {fileID: 198695961333188974}
   - component: {fileID: 199299451768472150}
+  - component: {fileID: 114212503919601736}
   m_Layer: 0
   m_Name: Explo Particle(B)
   m_TagString: Untagged
@@ -41,6 +42,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114212503919601736
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1139359270278208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 125f1ad3752e34c9eb1d1d3d298b35b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!198 &198695961333188974
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -50,7 +62,7 @@ ParticleSystem:
   serializedVersion: 5
   lengthInSec: 1
   simulationSpeed: 1
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   autoRandomSeed: 1
