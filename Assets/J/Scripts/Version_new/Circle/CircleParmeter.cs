@@ -22,6 +22,7 @@ public class CircleParmeter : MonoBehaviour
     }
     void OnMouseDown()
     {
+        
         if (LimitNumber > 0 && gamemain.shoot != "" && gamemain.shoot != null)
         {
             // get the ray point
@@ -45,7 +46,19 @@ public class CircleParmeter : MonoBehaviour
 
             LimitNumber--;
         }
+        else
+        {
+
+            Ray ray1 = Camera.main.ScreenPointToRay (Input.mousePosition);
+		RaycastHit2D rayhit1=Physics2D.Raycast (ray1.origin,ray1.direction,100);
+        GameObject tempclick=JObjectPool._InstanceJObjectPool.GetGameObject("ClickEffect",rayhit1.point);
+        StartCoroutine(delay(tempclick));
+
+        }
     }
 
-
+IEnumerator delay(GameObject g){
+		yield return new WaitForSeconds(2f);
+		JObjectPool._InstanceJObjectPool.Recovery(g);
+	}
 }

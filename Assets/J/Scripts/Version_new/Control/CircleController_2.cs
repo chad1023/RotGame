@@ -47,9 +47,9 @@ public class CircleController_2 : MonoBehaviour
             if (touchlasttime <= RotateLastTime)
             {
                 if (m_Jtouch.x_Distance != 0)
-                    Circle.transform.Rotate(0, 0, m_Jtouch.x_Distance * RotateSpeed * Time.deltaTime);
+                    Circle.transform.Rotate(0, 0, m_Jtouch.x_Distance/Screen.width * RotateSpeed * Time.deltaTime);
                 if (m_Jtouch.y_Distance != 0)
-                    Circle.transform.Rotate(0, 0, -m_Jtouch.y_Distance * RotateSpeed * Time.deltaTime);
+                    Circle.transform.Rotate(0, 0, -m_Jtouch.y_Distance /Screen.height* RotateSpeed * Time.deltaTime);
             }
             else
                 isTouch = false;
@@ -102,7 +102,12 @@ public class CircleController_2 : MonoBehaviour
             m_screenPos = pos;
         }
     }
+    /// <summary>
+    /// OnMouseDown is called when the user has pressed the mouse button while
+    /// over the GUIElement or Collider.
+    /// </summary>
     
+
     void MobileInput()
     {
         if (Input.touchCount <= 0)
