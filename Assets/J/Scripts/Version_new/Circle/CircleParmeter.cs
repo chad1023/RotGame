@@ -7,6 +7,7 @@ public class CircleParmeter : MonoBehaviour
 {
     public GameMain gamemain;
     public int LimitNumber;
+	public int LimitNumbermax;
     public float Radius;
 
     // Use this for initialization
@@ -49,13 +50,16 @@ public class CircleParmeter : MonoBehaviour
         else
         {
 
-            Ray ray1 = Camera.main.ScreenPointToRay (Input.mousePosition);
+        Ray ray1 = Camera.main.ScreenPointToRay (Input.mousePosition);
 		RaycastHit2D rayhit1=Physics2D.Raycast (ray1.origin,ray1.direction,100);
         GameObject tempclick=JObjectPool._InstanceJObjectPool.GetGameObject("ClickEffect",rayhit1.point);
         StartCoroutine(delay(tempclick));
 
         }
     }
+	public void Reset(){
+		LimitNumber = LimitNumbermax;
+	}
 
 IEnumerator delay(GameObject g){
 		yield return new WaitForSeconds(2f);

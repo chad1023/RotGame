@@ -59,6 +59,8 @@ public class GameMain : MonoBehaviour {
 	[Header("particle for hit")]
 	public GameObject[]smoke;
 
+	public CircleParmeter [] circle;
+
 	[Header("unchanged")]
 	public int bloodmax;
 	public int energyball_max;
@@ -89,6 +91,11 @@ public class GameMain : MonoBehaviour {
 
 	 public void InitGame(){
 		animator.enabled = true;
+	
+		foreach (CircleParmeter c in circle) {
+			c.Reset ();
+		}
+
 		foreach (GameObject p in smoke) {
 			p.SetActive (false);
 		}
@@ -376,8 +383,8 @@ public class GameMain : MonoBehaviour {
 				Vector2 project = (Random.insideUnitCircle).normalized * enemy_radius;
 				Vector3 pos = new Vector3 (project.x, project.y, 0);
 				GameObject enemy_clone = GetGameObject (enemy.type [i], pos);
-				enemy_clone.GetComponent<FlyingObjControl> ().MoveSpeed = 5*(1+rate);
-				yield return new WaitForSeconds (enemy.period-t);
+				enemy_clone.GetComponent<FlyingObjControl> ().MoveSpeed = 5f;
+				yield return new WaitForSeconds (enemy.period);
 				enemy.encoutered = false;
 			} 
 			else if (enemy.PrefabName == "blackhole") 

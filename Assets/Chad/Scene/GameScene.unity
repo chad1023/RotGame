@@ -822,13 +822,13 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: f00f9037a89a8471aafc1ddbf225c935, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.23
   m_Pitch: 1
   Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 65
+  Priority: 178
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -956,6 +956,11 @@ MonoBehaviour:
   smoke:
   - {fileID: 1211778700}
   - {fileID: 761859206}
+  circle:
+  - {fileID: 435591442}
+  - {fileID: 1675805740}
+  - {fileID: 1675355224}
+  - {fileID: 203152057}
   bloodmax: 5
   energyball_max: 5
   enemy_radius: 6
@@ -1282,6 +1287,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gamemain: {fileID: 188397083}
   LimitNumber: 8
+  LimitNumbermax: 8
   Radius: 2.1
 --- !u!224 &363867785 stripped
 RectTransform:
@@ -1533,6 +1539,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gamemain: {fileID: 188397083}
   LimitNumber: 2
+  LimitNumbermax: 2
   Radius: 0.75
 --- !u!1 &493417059
 GameObject:
@@ -7221,6 +7228,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gamemain: {fileID: 188397083}
   LimitNumber: 6
+  LimitNumbermax: 6
   Radius: 1.65
 --- !u!1 &1675805736
 GameObject:
@@ -7316,6 +7324,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gamemain: {fileID: 188397083}
   LimitNumber: 4
+  LimitNumbermax: 4
   Radius: 1.2
 --- !u!1001 &1679181735
 Prefab:
@@ -8361,7 +8370,7 @@ MonoBehaviour:
   - {fileID: 1675355220}
   - {fileID: 203152053}
   CircleSelfRotateSpeed: 10
-  RotateSpeed: 2000
+  RotateSpeed: 3000
   RotateLastTime: 1.5
   RotateLimit: 0
 --- !u!4 &1898872695
