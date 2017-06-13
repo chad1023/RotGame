@@ -998,7 +998,7 @@ MonoBehaviour:
       - {fileID: 1108864559035078, guid: a9f123de78e574e45bcbdc52885af718, type: 2}
     planet_list:
     - prefab: {fileID: 1099832164579954, guid: 4c802793b3060e64186f6e07aa718d2f, type: 2}
-      pos: {x: 2.5, y: 5.8, z: 2}
+      pos: {x: 2, y: 5.8, z: 2}
       e_time: 50
       encoutered: 0
     - prefab: {fileID: 1099832164579954, guid: 978418f6e2293554ea714ae94087003a, type: 2}
@@ -1010,19 +1010,19 @@ MonoBehaviour:
       e_time: 1500
       encoutered: 0
     - prefab: {fileID: 1099832164579954, guid: caef2cceeb2517f4cb5468906716c4fd, type: 2}
-      pos: {x: -1.9, y: 5.8, z: 2}
+      pos: {x: -1.8, y: 5.8, z: 2}
       e_time: 2100
       encoutered: 0
     - prefab: {fileID: 1099832164579954, guid: 8ca790bbea267d14e901ccdfd511fc89, type: 2}
-      pos: {x: 1.9, y: 5.8, z: 2}
+      pos: {x: 2.5, y: 5.8, z: 2}
       e_time: 2800
       encoutered: 0
     - prefab: {fileID: 1099832164579954, guid: 88117a8526f76a0439b6c86fe3ad4d3c, type: 2}
-      pos: {x: -2.5, y: 5.8, z: 2}
+      pos: {x: -2, y: 5.8, z: 2}
       e_time: 3300
       encoutered: 0
     - prefab: {fileID: 1099832164579954, guid: 6a3d381781770b14da813f0843950418, type: 2}
-      pos: {x: 2, y: 5.8, z: 2}
+      pos: {x: -3, y: 5.8, z: 2}
       e_time: 3800
       encoutered: 0
     - prefab: {fileID: 1099832164579954, guid: 5f6cfbd8891b56b49865eb95bcc7bc77, type: 2}
@@ -1030,11 +1030,11 @@ MonoBehaviour:
       e_time: 4500
       encoutered: 0
     - prefab: {fileID: 1099832164579954, guid: f9ab8e687b239fb49a7b79c8f52812e6, type: 2}
-      pos: {x: 1.5, y: 5.8, z: 2}
+      pos: {x: -2.8, y: 5.8, z: 2}
       e_time: 5100
       encoutered: 0
     - prefab: {fileID: 1099832164579954, guid: fe68fad0c0a5a8b41a4c92bbe2034f78, type: 2}
-      pos: {x: -3, y: 5.8, z: 2}
+      pos: {x: 1.5, y: 5.8, z: 2}
       e_time: 5800
       encoutered: 0
     planet_go: {fileID: 21300000, guid: f559dcc7ba72144e38803ad42817652e, type: 3}
