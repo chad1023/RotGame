@@ -37,10 +37,15 @@ public class blackhole : MonoBehaviour {
             other.transform.SetParent(AllSceneObj);
             other.transform.GetComponent<Collider>().enabled = false;
             other.transform.DOMove(transform.position, 0.5f);
-            JObjectPool._InstanceJObjectPool.DelayRecovery(other.gameObject,0.5f);
-
+			StartCoroutine (Recovery (other.gameObject, 0.5f));
+			StartCoroutine (Recovery (gameObject, 0.5f));
+          
         }
 
 
     }
+	IEnumerator Recovery(GameObject g, float f){
+		yield return new WaitForSeconds (f);
+		JObjectPool._InstanceJObjectPool.Recovery(g);
+	}
 }

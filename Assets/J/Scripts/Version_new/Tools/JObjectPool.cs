@@ -233,12 +233,15 @@ public class JObjectPool : MonoBehaviour
     /// Delay f seconds than recovery object
     /// </summary>
     /// <param name="s"></param>
-    public IEnumerator DelayRecovery(GameObject g, float f)
+    public void DelayRecovery(GameObject g, float f)
     {
-
-        yield return new WaitForSeconds(f);
-        Recovery(g);
+		StartCoroutine (Delay (g, f));
     }
+
+	IEnumerator Delay(GameObject g, float f){
+		yield return new WaitForSeconds(f);
+		Recovery(g);
+	}
     /// <summary>
 	/// Instantiate Objects into JObject pool , the parameter is the prefab's name 
 	/// </summary>
