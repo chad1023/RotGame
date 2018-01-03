@@ -4,6 +4,6 @@
 
 ![](Revolver-Poster.jpg)
 
-###Video
+###  Video
 
 [![Watch the video](Revolver-video.png)](https://www.youtube.com/watch?v=o1EkNVmQWjI&feature=youtu.be)
