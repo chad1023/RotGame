@@ -6,4 +6,4 @@
 
 ###Video
 
-[![Watch the video](Revolver-video.png)]((https://www.youtube.com/watch?v=o1EkNVmQWjI&feature=youtu.be)
+[![Watch the video](Revolver-video.png)](https://www.youtube.com/watch?v=o1EkNVmQWjI&feature=youtu.be)
