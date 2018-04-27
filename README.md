@@ -6,7 +6,7 @@
 
 ### Introduction
 A 2D mobile action game focused on the rotate input of touch screen.
-In addition to choose such simple touch gesture as input, we dedicated ourselves to creating a relaxing game experience and make the gameplay easier to all mobile player.
+In addition to choose such simple touch gesture as input, we dedicated ourselves to creating a relaxing game experience and make the gameplay easy to all mobile player.
 
 
 ### Gameplay
